@@ -1,0 +1,9 @@
+{
+    "great-scrollable-tooltips.ui.title": "Great Scrollable Tooltips",
+    "great-scrollable-tooltips.ui.config.enable.true": "启用：§atrue",
+    "great-scrollable-tooltips.ui.config.enable.false": "启用：§cfalse",
+    "great-scrollable-tooltips.ui.config.sensitivity": "灵敏度：%s",
+    "great-scrollable-tooltips.ui.config.reload": "重载配置",
+    "great-scrollable-tooltips.ui.config.save-and-exit": "保存并退出",
+    "great-scrollable-tooltips.ui.config.discard-and-exit": "放弃并退出"
+}
