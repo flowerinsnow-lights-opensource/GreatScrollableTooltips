@@ -19,7 +19,7 @@ public class MixinDrawContext {
                     ordinal = 0,
                     opcode = Opcodes.ILOAD
             ),
-            index = 12
+            index = 13
     )
     public int modifyY(int value) {
         return value + GreatScrollableTooltips.getInstance().getVertical() * GreatScrollableTooltips.getInstance().getConfig().sensitivity;
