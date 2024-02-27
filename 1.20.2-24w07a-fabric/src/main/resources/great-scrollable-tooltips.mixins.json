@@ -6,7 +6,7 @@
         "AccessorSliderWidget",
         "MixinDrawContext",
         "MixinHandledScreen",
-        "MixinParentElement"
+        "MixinInventoryScreen"
     ],
     "injectors": {
         "defaultRequire": 1

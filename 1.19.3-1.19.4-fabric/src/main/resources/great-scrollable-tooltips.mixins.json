@@ -4,7 +4,7 @@
     "compatibilityLevel": "JAVA_17",
     "client": [
         "AccessorSliderWidget",
-        "MixinDrawContext",
+        "MixinScreen",
         "MixinHandledScreen",
         "MixinInventoryScreen"
     ],

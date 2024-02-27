@@ -72,6 +72,6 @@ public class Config {
     }
 
     private BiConsumer<Throwable, String> crashFunction() {
-        return (e, msg) -> MinecraftClient.getInstance().printCrashReport(CrashReport.create(e, msg));
+        return (e, msg) -> MinecraftClient.printCrashReport(CrashReport.create(e, msg));
     }
 }

@@ -2,15 +2,21 @@ package online.flowerinsnow.greatscrollabletooltips.mixin;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.AbstractParentElement;
-import net.minecraft.client.gui.ParentElement;
+import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
+import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.ActionResult;
 import online.flowerinsnow.greatscrollabletooltips.event.MouseScrolledInParentElementEvent;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(AbstractParentElement.class)
+@Mixin(InventoryScreen.class)
 @Environment(EnvType.CLIENT)
-public abstract class MixinParentElement implements ParentElement {
+public abstract class MixinInventoryScreen extends AbstractInventoryScreen<PlayerScreenHandler> {
+    public MixinInventoryScreen() {
+        //noinspection DataFlowIssue
+        super(null, null, null);
+    }
+
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
         ActionResult actionResult = MouseScrolledInParentElementEvent.EVENT.invoker()
@@ -18,6 +24,6 @@ public abstract class MixinParentElement implements ParentElement {
         if (actionResult == ActionResult.FAIL) {
             return false;
         }
-        return ParentElement.super.mouseScrolled(mouseX, mouseY, amount);
+        return super.mouseScrolled(mouseX, mouseY, amount);
     }
 }

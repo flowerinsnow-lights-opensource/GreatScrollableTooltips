@@ -2,26 +2,26 @@ package online.flowerinsnow.greatscrollabletooltips.mixin;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.Screen;
 import online.flowerinsnow.greatscrollabletooltips.GreatScrollableTooltips;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-@Mixin(DrawContext.class)
+@Mixin(Screen.class)
 @Environment(EnvType.CLIENT)
-public class MixinDrawContext {
+public class MixinScreen {
     @ModifyVariable(
-            method = "drawTooltip(Lnet/minecraft/client/font/TextRenderer;Ljava/util/List;IILnet/minecraft/client/gui/tooltip/TooltipPositioner;)V",
+            method = "renderTooltipFromComponents",
             at = @At(
                     value = "LOAD",
-                    ordinal = 0,
-                    opcode = Opcodes.ILOAD
+                    opcode = Opcodes.ILOAD,
+                    ordinal = 0
             ),
-            index = 13
+            ordinal = 7
     )
-    public int modifyY(int value) {
+    private int modifyY(int value) {
         GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
         return value + instance.getVertical() * instance.getConfig().sensitivity;
     }
