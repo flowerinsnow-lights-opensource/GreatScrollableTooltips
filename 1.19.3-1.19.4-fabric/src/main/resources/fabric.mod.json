@@ -27,12 +27,19 @@
 		"great-scrollable-tooltips.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.15.7",
-		"minecraft": "~1.19.4",
+		"fabricloader": ">=0.14.10",
+		"minecraft": ">=1.19.3 <=1.19.4",
 		"java": ">=17",
-		"fabric-api": "*"
+		"fabric-api": ">=0.68.1"
 	},
 	"suggests": {
-		"another-mod": "*"
+		"modmenu": "5.0.0"
+	},
+	"custom": {
+		"modmenu": {
+			"links": {
+				"modmenu.github_releases": "https://github.com/flowerinsnow-lights-opensource/GreatScrollableTooltips/releases"
+			}
+		}
 	}
 }
