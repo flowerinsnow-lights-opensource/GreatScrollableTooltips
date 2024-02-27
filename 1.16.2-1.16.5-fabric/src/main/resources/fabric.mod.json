@@ -27,13 +27,13 @@
 		"great-scrollable-tooltips.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.15.7",
-		"minecraft": "~1.16.5",
+		"fabricloader": ">=0.8.9",
+		"minecraft": ">=1.16.2 <=1.16.5",
 		"java": ">=8",
-		"fabric": "*"
+		"fabric": ">=0.17.2"
 	},
 	"suggests": {
-		"another-mod": "*"
+		"modmenu": "1.15.0"
 	},
 	"custom": {
 		"modmenu": {
