@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
         maven {
-            url 'https://files.minecraftforge.net/maven'
+            url 'https://maven.minecraftforge.net/'
         }
         maven {
             url 'https://repo.spongepowered.org/repository/maven-public/'
@@ -19,7 +19,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'org.spongepowered.mixin'
 
-version = "1.0.1"
+version = "1.0.2"
 group= "online.flowerinsnow.greatscrollabletooltips"
 archivesBaseName = "great-scrollable-tooltips"
 
@@ -28,7 +28,7 @@ minecraft {
     runDir = "run"
 
     mappings = "stable_20"
-    makeObfSourceJar = true
+    makeObfSourceJar = false
 }
 
 repositories {
