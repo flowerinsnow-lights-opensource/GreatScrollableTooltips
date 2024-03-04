@@ -54,6 +54,7 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (client.currentScreen == null) {
+				horizontal = 0;
 				vertical = 0;
 			}
 		});

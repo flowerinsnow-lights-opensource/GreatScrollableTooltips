@@ -20,7 +20,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'org.spongepowered.mixin'
         
-version = '4.1.0'
+version = '4.1.1'
 group = 'online.flowerinsnow.greatscrollabletooltips'
 archivesBaseName = 'great-scrollable-tooltips'
 
@@ -129,7 +129,8 @@ shadowJar {
 }
 
 reobf {
-    shadowJar {}
+    shadowJar {
+    }
 }
 
 mixin {

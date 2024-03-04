@@ -14,7 +14,9 @@ public class GreatScrollableTooltipsListener {
 
     @SubscribeEvent
     public void onGuiClose(ScreenCloseEvent event) {
-        GreatScrollableTooltips.getInstance().setVertical(0);
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        instance.setHorizontal(0);
+        instance.setVertical(0);
     }
 
     @SubscribeEvent
