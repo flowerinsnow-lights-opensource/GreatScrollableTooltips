@@ -46,7 +46,7 @@ public class MixinGuiUtils {
             at = @At(
                     value = "LOAD",
                     opcode = Opcodes.ILOAD,
-                    ordinal = 7
+                    ordinal = 5
             ),
             index = 12,
             remap = false
