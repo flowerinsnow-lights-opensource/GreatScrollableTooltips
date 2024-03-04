@@ -21,6 +21,7 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 
 	private Config config;
 
+	private int horizontal;
 	private int vertical;
 	private boolean rendering;
 
@@ -36,6 +37,7 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 			MinecraftClient client = MinecraftClient.getInstance();
 			if (client.currentScreen != null && config.enable && rendering) {
 				vertical += (int) verticalAmount;
+				horizontal += (int) horizontalAmount;
 			}
 			return ActionResult.PASS;
 		});
@@ -65,8 +67,12 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 		return config;
 	}
 
+	public int getHorizontal() {
+		return this.horizontal;
+	}
+
 	public int getVertical() {
-		return vertical;
+		return this.vertical;
 	}
 
 	public void setVertical(int vertical) {

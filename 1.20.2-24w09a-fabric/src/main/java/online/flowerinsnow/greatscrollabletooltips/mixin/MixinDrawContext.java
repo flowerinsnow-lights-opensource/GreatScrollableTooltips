@@ -19,9 +19,24 @@ public class MixinDrawContext {
                     ordinal = 0,
                     opcode = Opcodes.ILOAD
             ),
-            index = 13
+            index = 11
+    )
+    public int modifyX(int value) {
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        return value + instance.getHorizontal() * instance.getConfig().sensitivity;
+    }
+
+    @ModifyVariable(
+            method = "drawTooltip(Lnet/minecraft/client/font/TextRenderer;Ljava/util/List;IILnet/minecraft/client/gui/tooltip/TooltipPositioner;)V",
+            at = @At(
+                    value = "LOAD",
+                    ordinal = 0,
+                    opcode = Opcodes.ILOAD
+            ),
+            index = 12
     )
     public int modifyY(int value) {
-        return value + GreatScrollableTooltips.getInstance().getVertical() * GreatScrollableTooltips.getInstance().getConfig().sensitivity;
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        return value + instance.getVertical() * instance.getConfig().sensitivity;
     }
 }
