@@ -45,6 +45,20 @@ public class MixinGuiUtils {
             at = @At(
                     value = "LOAD",
                     opcode = Opcodes.ILOAD,
+                    ordinal = 4
+            ),
+            index = 10,
+            remap = false
+    )
+    private static int modifyTooltipX(int value) {
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        return value + instance.getHorizontal() * instance.getConfig().sensitivity;
+    }
+    @ModifyVariable(
+            method = "drawHoveringText",
+            at = @At(
+                    value = "LOAD",
+                    opcode = Opcodes.ILOAD,
                     ordinal = 3
             ),
             index = 11,
