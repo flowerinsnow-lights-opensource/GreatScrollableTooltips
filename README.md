@@ -1,6 +1,9 @@
 # Languages
 [简体中文](README/zh_cn.md)
 
+# GreatScrollableTooltips
+Allow scrolling of item tooltips in inventory (Lore)
+
 # Usage
 Put the mod file into the mods directory, point the mouse pointer at an item, and slide the mouse wheel to scroll the item tooltip
 
