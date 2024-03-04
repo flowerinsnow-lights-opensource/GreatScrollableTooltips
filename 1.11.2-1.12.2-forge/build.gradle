@@ -15,12 +15,12 @@ buildscript {
         classpath 'org.spongepowered:mixingradle:0.7.32'
     }
 }
-        
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'org.spongepowered.mixin'
         
-version = '4.0.0'
+version = '4.1.0'
 group = 'online.flowerinsnow.greatscrollabletooltips'
 archivesBaseName = 'great-scrollable-tooltips'
 

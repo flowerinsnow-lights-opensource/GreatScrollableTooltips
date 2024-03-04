@@ -46,6 +46,21 @@ public class MixinGuiUtils {
             at = @At(
                     value = "LOAD",
                     opcode = Opcodes.ILOAD,
+                    ordinal = 7
+            ),
+            index = 12,
+            remap = false
+    )
+    private static int modifyTooltipX(int value) {
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        return value + instance.getHorizontal() * instance.getConfig().sensitivity;
+    }
+
+    @ModifyVariable(
+            method = "drawHoveringText(Lnet/minecraft/item/ItemStack;Ljava/util/List;IIIIILnet/minecraft/client/gui/FontRenderer;)V",
+            at = @At(
+                    value = "LOAD",
+                    opcode = Opcodes.ILOAD,
                     ordinal = 5
             ),
             index = 13,

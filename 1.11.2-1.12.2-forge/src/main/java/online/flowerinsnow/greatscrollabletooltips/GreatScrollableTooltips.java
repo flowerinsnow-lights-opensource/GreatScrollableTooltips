@@ -26,7 +26,7 @@ import java.io.File;
 public class GreatScrollableTooltips {
     public static final String MODID = "great-scrollable-tooltips";
     public static final String NAME = "Great Scrollable Tooltips";
-    public static final String VERSION = "4.0.0";
+    public static final String VERSION = "4.1.0";
 
     private static GreatScrollableTooltips instance;
 
@@ -34,6 +34,7 @@ public class GreatScrollableTooltips {
 
     private Config config;
 
+    private int horizontal;
     private int vertical;
 
     @EventHandler
@@ -56,6 +57,14 @@ public class GreatScrollableTooltips {
 
     public Config getConfig() {
         return config;
+    }
+
+    public int getHorizontal() {
+        return horizontal;
+    }
+
+    public void setHorizontal(int horizontal) {
+        this.horizontal = horizontal;
     }
 
     public int getVertical() {

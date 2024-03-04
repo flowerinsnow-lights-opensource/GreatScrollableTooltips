@@ -1,6 +1,7 @@
 package online.flowerinsnow.greatscrollabletooltips.listener;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -29,7 +30,12 @@ public class GreatScrollableTooltipsListener {
         long eventNanoseconds = Mouse.getEventNanoseconds();
         if (lastEventNanoseconds != eventNanoseconds) {
             lastEventNanoseconds = eventNanoseconds;
-            instance.setVertical(instance.getVertical() + eventDWheel / 100);
+            boolean shiftDown = GuiScreen.isShiftKeyDown();
+            if (shiftDown) {
+                instance.setHorizontal(instance.getHorizontal() + eventDWheel / 100);
+            } else {
+                instance.setVertical(instance.getVertical() + eventDWheel / 100);
+            }
         }
     }
 }
