@@ -34,7 +34,7 @@ dependencies {
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
-	modImplementation 'com.terraformersmc:modmenu:9.0.0'
+	modImplementation 'com.terraformersmc:modmenu:10.0.0-alpha.1'
 	include(api('online.flowerinsnow.fnml:fnml4j-core:1.0.3'))
 }
 
