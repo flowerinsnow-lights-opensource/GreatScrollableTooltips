@@ -15,7 +15,7 @@ public interface RenderMouseoverTooltipEvent {
     interface Post {
         Event<Post> EVENT = EventFactory.createArrayBacked(Post.class, listeners -> (handledScreen, textRenderer, itemStack, tooltip, context, x, y) -> {
             for (Post listener : listeners) {
-                ActionResult actionResult = listener.startDrawMouseoverTooltip(handledScreen, textRenderer, itemStack, tooltip, context, x, y);
+                ActionResult actionResult = listener.endDrawMouseoverTooltip(handledScreen, textRenderer, itemStack, tooltip, context, x, y);
                 if (actionResult != ActionResult.PASS) {
                     return actionResult;
                 }
@@ -23,7 +23,7 @@ public interface RenderMouseoverTooltipEvent {
             return ActionResult.PASS;
         });
 
-        ActionResult startDrawMouseoverTooltip(HandledScreen<?> screen, TextRenderer textRenderer, ItemStack itemStack, List<Text> tooltip, DrawContext context, int x, int y);
+        ActionResult endDrawMouseoverTooltip(HandledScreen<?> screen, TextRenderer textRenderer, ItemStack itemStack, List<Text> tooltip, DrawContext context, int x, int y);
     }
 
     interface Miss {
