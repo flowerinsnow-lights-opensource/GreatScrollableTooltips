@@ -11,6 +11,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import online.flowerinsnow.greatscrollabletooltips.event.MouseScrolledInParentElementEvent;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.Inject;
 
 @Mixin(InventoryScreen.class)
 @Environment(EnvType.CLIENT)
