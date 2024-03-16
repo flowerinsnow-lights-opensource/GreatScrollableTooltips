@@ -5,6 +5,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.ActionResult;
 import online.flowerinsnow.greatscrollabletooltips.config.Config;
 import online.flowerinsnow.greatscrollabletooltips.event.MouseScrolledInParentElementEvent;
@@ -21,6 +22,7 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 
 	private Config config;
 
+	private int horizontal;
 	private int vertical;
 	private boolean rendering;
 
@@ -35,7 +37,11 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 		MouseScrolledInParentElementEvent.EVENT.register((parentElement, mouseX, mouseY, amount) -> {
 			MinecraftClient client = MinecraftClient.getInstance();
 			if (client.currentScreen != null && config.enable && rendering) {
-				vertical += (int) amount;
+				if (Screen.hasShiftDown()) {
+					horizontal += (int) amount;
+				} else {
+					vertical += (int) amount;
+				}
 			}
 			return ActionResult.PASS;
 		});
@@ -52,6 +58,7 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (client.currentScreen == null) {
+				horizontal = 0;
 				vertical = 0;
 			}
 		});
@@ -63,6 +70,14 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 
 	public Config getConfig() {
 		return config;
+	}
+
+	public int getHorizontal() {
+		return horizontal;
+	}
+
+	public void setHorizontal(int horizontal) {
+		this.horizontal = horizontal;
 	}
 
 	public int getVertical() {

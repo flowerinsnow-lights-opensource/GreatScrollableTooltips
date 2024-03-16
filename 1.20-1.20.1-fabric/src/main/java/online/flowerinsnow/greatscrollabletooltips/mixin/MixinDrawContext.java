@@ -22,7 +22,7 @@ public class MixinDrawContext {
     )
     public int modifyBackgroundX(int x) {
         GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
-        return x + (instance.getVertical() * instance.getConfig().sensitivity);
+        return x + (instance.getHorizontal() * instance.getConfig().sensitivity);
     }
 
     @ModifyArg(
@@ -36,6 +36,33 @@ public class MixinDrawContext {
     )
     public int modifyTextX(int x) {
         GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
-        return x + (instance.getVertical() * instance.getConfig().sensitivity);
+        return x + (instance.getHorizontal() * instance.getConfig().sensitivity);
+    }
+    @ModifyArg(
+            method = "method_51743",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/tooltip/TooltipBackgroundRenderer;render(Lnet/minecraft/client/gui/DrawContext;IIIII)V",
+                    ordinal = 0
+            ),
+            index = 2
+    )
+    public int modifyBackgroundY(int y) {
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        return y + (instance.getVertical() * instance.getConfig().sensitivity);
+    }
+
+    @ModifyArg(
+            method = "drawTooltip(Lnet/minecraft/client/font/TextRenderer;Ljava/util/List;IILnet/minecraft/client/gui/tooltip/TooltipPositioner;)V",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/tooltip/TooltipComponent;drawText(Lnet/minecraft/client/font/TextRenderer;IILorg/joml/Matrix4f;Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;)V",
+                    ordinal = 0
+            ),
+            index = 2
+    )
+    public int modifyTextY(int y) {
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        return y + (instance.getVertical() * instance.getConfig().sensitivity);
     }
 }
