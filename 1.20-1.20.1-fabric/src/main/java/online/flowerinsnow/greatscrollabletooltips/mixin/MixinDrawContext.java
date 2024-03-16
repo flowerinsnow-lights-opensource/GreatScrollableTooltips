@@ -4,25 +4,38 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
 import online.flowerinsnow.greatscrollabletooltips.GreatScrollableTooltips;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(DrawContext.class)
 @Environment(EnvType.CLIENT)
 public class MixinDrawContext {
-    @ModifyVariable(
+    @ModifyArg(
+            method = "method_51743",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/tooltip/TooltipBackgroundRenderer;render(Lnet/minecraft/client/gui/DrawContext;IIIII)V",
+                    ordinal = 0
+            ),
+            index = 1
+    )
+    public int modifyBackgroundX(int x) {
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        return x + (instance.getVertical() * instance.getConfig().sensitivity);
+    }
+
+    @ModifyArg(
             method = "drawTooltip(Lnet/minecraft/client/font/TextRenderer;Ljava/util/List;IILnet/minecraft/client/gui/tooltip/TooltipPositioner;)V",
             at = @At(
-                    value = "LOAD",
-                    ordinal = 0,
-                    opcode = Opcodes.ILOAD
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/tooltip/TooltipComponent;drawText(Lnet/minecraft/client/font/TextRenderer;IILorg/joml/Matrix4f;Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;)V",
+                    ordinal = 0
             ),
-            index = 13
+            index = 1
     )
-    public int modifyY(int value) {
+    public int modifyTextX(int x) {
         GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
-        return value + instance.getVertical() * instance.getConfig().sensitivity;
+        return x + (instance.getVertical() * instance.getConfig().sensitivity);
     }
 }
