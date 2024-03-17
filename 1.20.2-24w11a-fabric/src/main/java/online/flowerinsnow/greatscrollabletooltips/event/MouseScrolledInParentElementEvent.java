@@ -9,7 +9,7 @@ import net.minecraft.util.ActionResult;
 
 @Environment(EnvType.CLIENT)
 public interface MouseScrolledInParentElementEvent {
-    Event<MouseScrolledInParentElementEvent> EVENT = EventFactory.createArrayBacked(MouseScrolledInParentElementEvent.class, listeners -> ((parentElement, mouseX, mouseY, horizontalAmount, verticalAmount) -> {
+    Event<MouseScrolledInParentElementEvent> EVENT = EventFactory.createArrayBacked(MouseScrolledInParentElementEvent.class, listeners -> (parentElement, mouseX, mouseY, horizontalAmount, verticalAmount) -> {
         for (MouseScrolledInParentElementEvent listener : listeners) {
             ActionResult actionResult = listener.onMouseScrolled(parentElement, mouseX, mouseY, horizontalAmount, verticalAmount);
             if (actionResult != ActionResult.PASS) {
@@ -17,7 +17,7 @@ public interface MouseScrolledInParentElementEvent {
             }
         }
         return ActionResult.PASS;
-    }));
+    });
 
     ActionResult onMouseScrolled(ParentElement parentElement, double mouseX, double mouseY, double horizontalAmount, double verticalAmount);
 }
