@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
         classpath 'com.github.johnrengelman.shadow:com.github.johnrengelman.shadow.gradle.plugin:4.0.4'
-        classpath 'org.spongepowered:mixingradle:0.7.32'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 
@@ -20,7 +20,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'org.spongepowered.mixin'
         
-version = '4.1.2'
+version = '4.2.0-alpha.1'
 group = 'online.flowerinsnow.greatscrollabletooltips'
 archivesBaseName = 'great-scrollable-tooltips'
 
@@ -109,7 +109,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 shadowJar {
-    from 'LICENSE'
+    exclude 'LICENSE.txt'
 
     manifest {
         attributes([
