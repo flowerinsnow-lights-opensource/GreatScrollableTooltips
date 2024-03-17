@@ -1,6 +1,8 @@
 package online.flowerinsnow.greatscrollabletooltips;
 
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -8,10 +10,12 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import online.flowerinsnow.greatscrollabletooltips.config.Config;
+import online.flowerinsnow.greatscrollabletooltips.listener.CursorKeyListener;
 import online.flowerinsnow.greatscrollabletooltips.listener.EventTrigger;
 import online.flowerinsnow.greatscrollabletooltips.listener.GreatScrollableTooltipsListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.input.Keyboard;
 
 import java.io.File;
 
@@ -26,7 +30,7 @@ import java.io.File;
 public class GreatScrollableTooltips {
     public static final String MODID = "great-scrollable-tooltips";
     public static final String NAME = "Great Scrollable Tooltips";
-    public static final String VERSION = "4.1.2";
+    public static final String VERSION = "4.2.0-alpha.1";
 
     private static GreatScrollableTooltips instance;
 
@@ -36,6 +40,10 @@ public class GreatScrollableTooltips {
 
     private int horizontal;
     private int vertical;
+    public static final KeyBinding KEY_BINDING_SCROLL_UP = new KeyBinding("great-scrollable-tooltips.key-binding.scroll-up", Keyboard.KEY_UP, "great-scrollable-tooltips.key-binding.category");
+    public static final KeyBinding KEY_BINDING_SCROLL_LEFT = new KeyBinding("great-scrollable-tooltips.key-binding.scroll-left", Keyboard.KEY_LEFT, "great-scrollable-tooltips.key-binding.category");
+    public static final KeyBinding KEY_BINDING_SCROLL_DOWN = new KeyBinding("great-scrollable-tooltips.key-binding.scroll-down", Keyboard.KEY_DOWN, "great-scrollable-tooltips.key-binding.category");
+    public static final KeyBinding KEY_BINDING_SCROLL_RIGHT = new KeyBinding("great-scrollable-tooltips.key-binding.scroll-right", Keyboard.KEY_RIGHT, "great-scrollable-tooltips.key-binding.category");
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -49,6 +57,12 @@ public class GreatScrollableTooltips {
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new GreatScrollableTooltipsListener());
         MinecraftForge.EVENT_BUS.register(new EventTrigger());
+        MinecraftForge.EVENT_BUS.register(new CursorKeyListener());
+
+        ClientRegistry.registerKeyBinding(KEY_BINDING_SCROLL_UP);
+        ClientRegistry.registerKeyBinding(KEY_BINDING_SCROLL_LEFT);
+        ClientRegistry.registerKeyBinding(KEY_BINDING_SCROLL_DOWN);
+        ClientRegistry.registerKeyBinding(KEY_BINDING_SCROLL_RIGHT);
     }
 
     public static GreatScrollableTooltips getInstance() {
