@@ -19,7 +19,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'org.spongepowered.mixin'
 
-version = "1.1.2"
+version = "1.2.0-alpha.1"
 group= "online.flowerinsnow.greatscrollabletooltips"
 archivesBaseName = "great-scrollable-tooltips"
 
@@ -77,8 +77,6 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 shadowJar {
-    from 'LICENSE'
-
     manifest {
         attributes([
                 'TweakClass': 'online.flowerinsnow.greatscrollabletooltips.tweaker.GreatScrollableTooltipsTweaker'
