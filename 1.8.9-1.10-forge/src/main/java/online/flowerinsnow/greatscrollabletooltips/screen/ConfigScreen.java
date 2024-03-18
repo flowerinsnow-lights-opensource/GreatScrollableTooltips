@@ -5,9 +5,12 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.client.config.GuiSlider;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import online.flowerinsnow.greatscrollabletooltips.GreatScrollableTooltips;
 import online.flowerinsnow.greatscrollabletooltips.config.Config;
 
+@SideOnly(Side.CLIENT)
 public class ConfigScreen extends GuiScreen {
     private final GuiScreen parent;
     private final Config config;

@@ -5,8 +5,11 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import online.flowerinsnow.greatscrollabletooltips.event.ScreenCloseEvent;
 
+@SideOnly(Side.CLIENT)
 public class EventTrigger {
     private GuiScreen oldScreen;
     @SubscribeEvent
