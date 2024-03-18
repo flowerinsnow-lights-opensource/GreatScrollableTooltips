@@ -3,7 +3,10 @@ package online.flowerinsnow.greatscrollabletooltips.event;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class GuiContainerKeyTypedEvent extends Event {
     public final GuiContainer gui;
     public final char typedChar;

@@ -2,6 +2,8 @@ package online.flowerinsnow.greatscrollabletooltips.config;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import online.flowerinsnow.fnml4j.api.node.ObjectNode;
 import online.flowerinsnow.fnml4j.api.node.StringNode;
 import online.flowerinsnow.fnml4j.api.parser.present.FNML4JPresentParser;
@@ -12,6 +14,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.function.BiConsumer;
 
+@SideOnly(Side.CLIENT)
 public class Config {
     private ObjectNode rootNode;
 
