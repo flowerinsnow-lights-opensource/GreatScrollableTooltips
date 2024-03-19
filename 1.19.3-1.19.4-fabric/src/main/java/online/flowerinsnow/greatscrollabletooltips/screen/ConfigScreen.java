@@ -3,10 +3,10 @@ package online.flowerinsnow.greatscrollabletooltips.screen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.SliderWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import online.flowerinsnow.greatscrollabletooltips.config.Config;
 import online.flowerinsnow.greatscrollabletooltips.mixin.AccessorSliderWidget;
@@ -48,7 +48,7 @@ public class ConfigScreen extends Screen {
                 200, 20, Text.translatable(
                         "great-scrollable-tooltips.ui.config.sensitivity",
                         config.sensitivity
-                ), new BigDecimal(config.sensitivity).add(new BigDecimal(-1)).divide(new BigDecimal(99), 2, RoundingMode.DOWN).doubleValue()) {
+                ), new BigDecimal(config.sensitivity).add(new BigDecimal(-1)).divide(new BigDecimal(99), 2, RoundingMode.UP).doubleValue()) {
                     @Override
                     protected void updateMessage() {
                         setMessage(Text.translatable(
@@ -96,9 +96,9 @@ public class ConfigScreen extends Screen {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context, mouseX, mouseY, delta);
-        super.render(context, mouseX, mouseY, delta);
-        context.drawCenteredTextWithShadow(this.textRenderer, Text.translatable("great-scrollable-tooltips.ui.title"), this.width / 2, 20, 0xFFFFFF);
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        this.renderBackground(matrices);
+        super.render(matrices, mouseX, mouseY, delta);
+        Screen.drawCenteredTextWithShadow(matrices, this.textRenderer, Text.translatable("great-scrollable-tooltips.ui.title").asOrderedText(), this.width / 2, 20, 0xFFFFF);
     }
 }
