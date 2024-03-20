@@ -64,4 +64,4 @@ This jar contains signatures that do not include a timestamp. Without a timestam
 1. When the signer's CN is not `flowerinsnow.online`, it means that the signer is not the current author.
 2. When something like `jarsigner: java.lang.SecurityException: SHA-256 digest error for online/flowerinsnow/greatscrollabletooltips/GreatScrollableTooltips.class`, it means that the jar file has been modified.
 3. When something like `This jar contains entries whose certificate chain is invalid. Reason: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target` or `This jar contains entries whose signer certificate is self-signed.`, it indicates that the copy was signed by an unknown signer
-4. When something like `jar is not signed appears. `. It means that the copy is not signed
+4. When something like `jar is unsigned.`. It means that the copy is not signed
