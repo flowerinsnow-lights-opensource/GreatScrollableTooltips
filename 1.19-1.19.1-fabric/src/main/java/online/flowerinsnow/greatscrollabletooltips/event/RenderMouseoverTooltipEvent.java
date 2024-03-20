@@ -1,5 +1,7 @@
 package online.flowerinsnow.greatscrollabletooltips.event;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -7,11 +9,12 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 
+@Environment(EnvType.CLIENT)
 public interface RenderMouseoverTooltipEvent {
     interface Post {
         Event<Post> EVENT = EventFactory.createArrayBacked(Post.class, listeners -> (screen, matrices, stack, x, y) -> {
             for (Post listener : listeners) {
-                ActionResult actionResult = listener.startDrawMouseoverTooltip(screen, matrices, stack, x, y);
+                ActionResult actionResult = listener.endDrawMouseoverTooltip(screen, matrices, stack, x, y);
                 if (actionResult != ActionResult.PASS) {
                     return actionResult;
                 }
@@ -19,7 +22,7 @@ public interface RenderMouseoverTooltipEvent {
             return ActionResult.PASS;
         });
 
-        ActionResult startDrawMouseoverTooltip(HandledScreen<?> screen, MatrixStack matrices, ItemStack stack, int x, int y);
+        ActionResult endDrawMouseoverTooltip(HandledScreen<?> screen, MatrixStack matrices, ItemStack stack, int x, int y);
     }
 
     interface Miss {

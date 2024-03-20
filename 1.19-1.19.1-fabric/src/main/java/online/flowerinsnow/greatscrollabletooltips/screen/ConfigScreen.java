@@ -3,7 +3,6 @@ package online.flowerinsnow.greatscrollabletooltips.screen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.SliderWidget;
@@ -49,7 +48,7 @@ public class ConfigScreen extends Screen {
                 200, 20, Text.translatable(
                         "great-scrollable-tooltips.ui.config.sensitivity",
                         config.sensitivity
-                ), new BigDecimal(config.sensitivity).add(new BigDecimal(-1)).divide(new BigDecimal(99), 2, RoundingMode.DOWN).doubleValue()) {
+                ), new BigDecimal(config.sensitivity).add(new BigDecimal(-1)).divide(new BigDecimal(99), 2, RoundingMode.UP).doubleValue()) {
                     @Override
                     protected void updateMessage() {
                         setMessage(Text.translatable(
@@ -100,6 +99,6 @@ public class ConfigScreen extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         this.renderBackground(matrices);
         super.render(matrices, mouseX, mouseY, delta);
-        DrawableHelper.drawCenteredTextWithShadow(matrices, this.textRenderer, Text.translatable("great-scrollable-tooltips.ui.title").asOrderedText(), this.width / 2, 20, 0xFFFFFF);
+        Screen.drawCenteredTextWithShadow(matrices, this.textRenderer, Text.translatable("great-scrollable-tooltips.ui.title").asOrderedText(), this.width / 2, 20, 0xFFFFF);
     }
 }
