@@ -48,7 +48,7 @@ public class ConfigScreen extends Screen {
                 200, 20, Text.translatable(
                         "great-scrollable-tooltips.ui.config.sensitivity",
                         config.sensitivity
-                ), new BigDecimal(config.sensitivity).add(new BigDecimal(-1)).divide(new BigDecimal(99), 2, RoundingMode.DOWN).doubleValue()) {
+                ), new BigDecimal(config.sensitivity).add(new BigDecimal(-1)).divide(new BigDecimal(99), 2, RoundingMode.UP).doubleValue()) {
                     @Override
                     protected void updateMessage() {
                         setMessage(Text.translatable(
