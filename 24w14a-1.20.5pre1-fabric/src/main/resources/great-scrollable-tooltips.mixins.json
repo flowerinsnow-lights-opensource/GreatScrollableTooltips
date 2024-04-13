@@ -1,0 +1,14 @@
+{
+    "required": true,
+    "package": "online.flowerinsnow.greatscrollabletooltips.mixin",
+    "compatibilityLevel": "JAVA_17",
+    "client": [
+        "AccessorSliderWidget",
+        "MixinDrawContext",
+        "MixinHandledScreen",
+        "MixinInventoryScreen"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+	}
+}
