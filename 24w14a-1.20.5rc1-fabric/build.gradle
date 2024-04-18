@@ -1,5 +1,5 @@
 plugins() {
-	id('fabric-loom').version('1.6.9')
+	id('fabric-loom').version('1.6.10')
 	id('maven-publish')
 }
 
@@ -41,7 +41,7 @@ dependencies() {
 }
 
 processResources() {
-	def props = ['version' : project.version]
+	LinkedHashMap<String, ?> props = ['version' : project.version]
 	props.forEach(inputs::property)
 
 	filesMatching("fabric.mod.json") {
