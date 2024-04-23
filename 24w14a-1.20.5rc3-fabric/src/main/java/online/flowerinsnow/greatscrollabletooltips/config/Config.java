@@ -61,6 +61,8 @@ public class Config {
     public void save() {
         BiConsumer<Throwable, String> crashFunction = crashFunction();
         try (FileWriter fw = new FileWriter(getConfigFile().toFile(), StandardCharsets.UTF_8)) {
+            rootNode.set("enable", new StringNode(Boolean.toString(enable)));
+            rootNode.set("sensitivity", new StringNode(Integer.toString(sensitivity)));
             rootNode.writeRoot(0, fw);
         } catch (IOException e) {
             crashFunction.accept(e, "Failed to save config.");
