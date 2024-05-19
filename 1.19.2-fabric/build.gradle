@@ -12,11 +12,11 @@ base {
 
 repositories {
 	maven {
-		url 'https://repo.flowerinsnow.online/repository/maven-public/'
+		url 'https://maven.terraformersmc.com/releases/'
 	}
 
 	maven {
-		url 'https://maven.terraformersmc.com/releases/'
+		url 'https://repo.flowerinsnow.online/repository/maven-public/'
 	}
 }
 
@@ -34,7 +34,7 @@ dependencies {
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 	modImplementation 'com.terraformersmc:modmenu:4.0.6'
-	include(api('online.flowerinsnow.fnml:fnml4j-core:1.0.3'))
+	include(api('online.flowerinsnow.fnml:fnml4j-core:1.0.4'))
 }
 
 processResources {
