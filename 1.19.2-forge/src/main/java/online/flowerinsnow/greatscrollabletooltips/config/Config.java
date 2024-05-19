@@ -1,10 +1,8 @@
 package online.flowerinsnow.greatscrollabletooltips.config;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.util.crash.CrashReport;
+import net.minecraft.CrashReport;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.loading.FMLPaths;
 import online.flowerinsnow.fnml4j.api.node.ObjectNode;
 import online.flowerinsnow.fnml4j.api.node.StringNode;
 import online.flowerinsnow.fnml4j.api.parser.present.FNML4JPresentParser;
@@ -16,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.function.BiConsumer;
 
-@Environment(EnvType.CLIENT)
 public class Config {
     private ObjectNode rootNode;
 
@@ -25,7 +22,7 @@ public class Config {
 
     public void saveDefaultConfig() {
         BiConsumer<Throwable, String> crashFunction = this.crashFunction();
-        Path configFile = getConfigFile();
+        Path configFile = this.getConfigFile();
         File file = configFile.toFile();
         if (!file.exists()) {
             try {
@@ -70,10 +67,10 @@ public class Config {
     }
 
     public Path getConfigFile() {
-        return FabricLoader.getInstance().getConfigDir().resolve(GreatScrollableTooltips.MODID + ".conf");
+        return FMLPaths.CONFIGDIR.get().resolve(GreatScrollableTooltips.MODID + ".conf");
     }
 
     private BiConsumer<Throwable, String> crashFunction() {
-        return (e, msg) -> MinecraftClient.printCrashReport(CrashReport.create(e, msg));
+        return (e, msg) -> Minecraft.crash(CrashReport.forThrowable(e, msg));
     }
 }
