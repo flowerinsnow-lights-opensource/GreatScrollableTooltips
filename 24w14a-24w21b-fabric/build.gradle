@@ -1,5 +1,5 @@
 plugins() {
-	id('fabric-loom').version('1.6.11')
+	id('fabric-loom').version('1.7.0-alpha.4')
 	id('maven-publish')
 }
 
@@ -37,12 +37,15 @@ dependencies() {
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
-	modImplementation('com.terraformersmc:modmenu:10.0.0-beta.1')
+	modImplementation("com.terraformersmc:modmenu:${modmenu_version}")
 	include(api('online.flowerinsnow.fnml:fnml4j-core:1.0.4'))
 }
 
 processResources() {
-	LinkedHashMap<String, ?> props = ['version' : project.version]
+	LinkedHashMap<String, ?> props = [
+			'version' : project.version,
+			'modmenu_version' : modmenu_version
+	]
 	props.forEach(inputs::property)
 
 	filesMatching('fabric.mod.json') {
