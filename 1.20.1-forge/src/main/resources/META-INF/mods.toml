@@ -62,3 +62,10 @@ mandatory=true
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="CLIENT"
+
+[[dependencies.${mod_id}]]
+modId="iceberg"
+mandatory=false
+versionRange="[1.1.10,)"
+ordering="AFTER"
+side="CLIENT"
