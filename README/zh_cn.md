@@ -18,6 +18,11 @@
 
 如果您正在使用 Fabric 版本，请安装 Mod [模组菜单](https://modrinth.com/mod/modmenu)，并在模组菜单页面中找到 Great Scrollable Tooltips 并点击配置图标。
 
+# 依赖 & 不兼容
+- [Fabric API](https://modrinth.com/mod/fabric-api) 必须.
+- [Mod Menu](https://modrinth.com/mod/modmenu) 建议
+- [Optifine](https://optifine.net/) **不兼容**.
+
 # 签名验证
 部分版本有数字签名，建议您在非本仓库下载时进行签名验证，验证方法如下：
 
