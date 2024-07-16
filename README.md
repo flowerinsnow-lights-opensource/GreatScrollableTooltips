@@ -21,6 +21,11 @@ If you are using the Forge version, go to the Mod page, find Great Scrollable To
 
 If you are using the Fabric version, please install Mod [Mod Menu](https://modrinth.com/mod/modmenu), find Great Scrollable Tooltips in the Mod Menu page and click the configure icon.
 
+# Dependencies & Breaks
+- [Fabric API](https://modrinth.com/mod/fabric-api) is required.
+- [Mod Menu](https://modrinth.com/mod/modmenu) is suggested
+- [Optifine](https://optifine.net/) is **INCOMPATIBLE**.
+
 # Signature verification
 Some versions have digital signatures. It is recommended that you perform signature verification when downloading from a non-repository. The verification method is as follows:
 

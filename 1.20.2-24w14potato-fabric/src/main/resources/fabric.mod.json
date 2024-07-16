@@ -35,6 +35,9 @@
 	"suggests": {
 		"modmenu": ">=8.0.0"
 	},
+	"breaks": {
+		"optifabric": "*"
+	},
 	"custom": {
 		"modmenu": {
 			"links": {
