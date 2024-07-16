@@ -35,6 +35,9 @@
 	"suggests": {
 		"modmenu": ">=10.0.0-alpha.3"
 	},
+	"breaks": {
+		"optifabric": "*"
+	},
 	"custom": {
 		"modmenu": {
 			"links": {
