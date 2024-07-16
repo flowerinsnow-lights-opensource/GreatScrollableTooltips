@@ -43,8 +43,7 @@ dependencies() {
 
 processResources() {
 	LinkedHashMap<String, ?> props = [
-			'version' : project.version,
-			'modmenu_version' : modmenu_version
+			'version' : project.version
 	]
 	props.forEach(inputs::property)
 
