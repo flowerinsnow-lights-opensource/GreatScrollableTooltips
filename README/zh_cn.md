@@ -27,7 +27,7 @@
 **由于本人时间与精力有限，如果需要更多支持的版本、需要兼容的Mod、需要修复的问题，请开issue来告诉我，否则更新随缘**
 
 ## Fabric
-|         Mod version         |        Minecraft versions        | 修复[#38](https://github.com/flowerinsnow-lights-opensource/GreatScrollableTooltips/issues/38) | 兼容[LegendaryTooltips](https://github.com/AHilyard/LegendaryTooltips) |
+|           Mod版本           |          Minecraft版本           | 修复[#38](https://github.com/flowerinsnow-lights-opensource/GreatScrollableTooltips/issues/38) | 兼容[LegendaryTooltips](https://github.com/AHilyard/LegendaryTooltips) |
 | :-------------------------: | :------------------------------: | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------: |
 |             6.x             |           1.16-1.16.1            |                                               ❌                                                |                                   ❌                                    |
 |             7.x             |          1.16.2-1.16.5           |                                               ❌                                                |                                   ❌                                    |
@@ -42,14 +42,14 @@
 |            15.x             |   1.20.5-1.21,24w14a-1.21-rc1    |                                               ✅                                                |                                   ❌                                    |
 
 ## Forge
-| Mod version | Minecraft versions | 修复[#38](https://github.com/flowerinsnow-lights-opensource/GreatScrollableTooltips/issues/38) | 兼容[LegendaryTooltips](https://github.com/AHilyard/LegendaryTooltips) compatible |
-| :---------: | :----------------: | :--------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: |
-|     1.x     |     1.8.9-1.10     |                                               -                                                |                                         -                                         |
-|     3.x     |     1.10-1.11      |                                               ❌                                                |                                         -                                         |
-|     4.x     |   1.11.2-1.12.2    |                                               ❌                                                |                                         ❌                                         |
-|    11.x     |       1.19.2       |                                               ✅                                                |                                         ❌                                         |
-|    13.x     |       1.19.4       |                                               ✅                                                |                                         ❌                                         |
-|    15.x     |       1.20.1       |                                               ✅                                                |                                         ✅                                         |
+| Mod版本 | Minecraft版本 | 修复[#38](https://github.com/flowerinsnow-lights-opensource/GreatScrollableTooltips/issues/38) | 兼容[LegendaryTooltips](https://github.com/AHilyard/LegendaryTooltips) |
+| :-----: | :-----------: | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------: |
+|   1.x   |  1.8.9-1.10   |                                               -                                                |                                   -                                    |
+|   3.x   |   1.10-1.11   |                                               ❌                                                |                                   -                                    |
+|   4.x   | 1.11.2-1.12.2 |                                               ❌                                                |                                   ❌                                    |
+|  11.x   |    1.19.2     |                                               ✅                                                |                                   ❌                                    |
+|  13.x   |    1.19.4     |                                               ✅                                                |                                   ❌                                    |
+|  15.x   |    1.20.1     |                                               ✅                                                |                                   ✅                                    |
 
 # 签名验证
 部分版本有数字签名，建议您在非本仓库下载时进行签名验证，验证方法如下：
