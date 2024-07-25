@@ -42,7 +42,6 @@ dependencies() {
 
 	modImplementation("com.terraformersmc:modmenu:${modmenu_version}")
 	modImplementation("curse.maven:legendary-tooltips-fabric-542478:5343802")
-	modImplementation("curse.maven:iceberg-fabric-539382:5421589")
 	include(api("online.flowerinsnow.fnml:fnml4j-core:${fnml4j_version}"))
 }
 

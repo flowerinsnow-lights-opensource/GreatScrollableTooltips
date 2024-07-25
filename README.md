@@ -42,7 +42,7 @@ If you are using the Fabric version, please install Mod [Mod Menu](https://modri
 | 11.x(Unexpected duplicated) |              1.19.2              |                                                ❌                                                 |                                       ❌                                       |
 |            13.x             |           1.20-1.20.1            |                                                ❌                                                 |                                       ❌                                       |
 |            14.x             | 1.20.2-1.20.4,23w40a-24w14potato |                                                ✅                                                 |                                       ❌                                       |
-|            15.x             |   1.20.5-1.21,24w14a-1.21-rc1    |                                                ✅                                                 |                                       ❌                                       |
+|            15.x             |   1.20.5-1.21,24w14a-1.21-rc1    |                                                ✅                                                 |                                       ✅                                       |
 
 ## Forge
 | Mod version | Minecraft versions | [#38](https://github.com/flowerinsnow-lights-opensource/GreatScrollableTooltips/issues/38) Fixed | [LegendaryTooltips](https://github.com/AHilyard/LegendaryTooltips) compatible |
