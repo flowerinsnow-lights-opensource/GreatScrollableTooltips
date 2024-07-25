@@ -6,9 +6,12 @@
         "AccessorSliderWidget",
         "MixinDrawContext",
         "MixinHandledScreen",
-        "MixinInventoryScreen"
+        "MixinInventoryScreen",
+        "MixinItemModelComponent",
+        "MixinTooltipDecor"
     ],
     "injectors": {
         "defaultRequire": 1
-	}
+	},
+    "plugin": "online.flowerinsnow.greatscrollabletooltips.mixinplugin.GSTMixinPlugin"
 }
