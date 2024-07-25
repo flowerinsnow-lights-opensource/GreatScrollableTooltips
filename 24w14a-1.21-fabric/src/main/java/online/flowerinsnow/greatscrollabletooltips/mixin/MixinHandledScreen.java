@@ -64,7 +64,7 @@ public abstract class MixinHandledScreen<T extends ScreenHandler> extends Screen
     public void drawMouseoverTooltip(DrawContext context, int x, int y, CallbackInfo ci) {
         if (this.handler.getCursorStack().isEmpty() && this.focusedSlot != null && this.focusedSlot.hasStack()) {
             ItemStack itemStack = this.focusedSlot.getStack();
-            RenderMouseoverTooltipEvent.Post.EVENT.invoker().endDrawMouseoverTooltip(THIS, this.textRenderer, itemStack, this.getTooltipFromItem(itemStack), context, x, y);
+            RenderMouseoverTooltipEvent.Post.EVENT.invoker().endDrawMouseoverTooltip(this.THIS, this.textRenderer, itemStack, this.getTooltipFromItem(itemStack), context, x, y);
         } else {
             RenderMouseoverTooltipEvent.Miss.EVENT.invoker().onMiss(THIS);
         }

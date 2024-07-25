@@ -78,10 +78,10 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 
 		HandledScreenKeyPressedEvent.EVENT.register(new CursorKeyListener());
 
-		KeyBindingHelper.registerKeyBinding(KEY_BINDING_SCROLL_UP);
-		KeyBindingHelper.registerKeyBinding(KEY_BINDING_SCROLL_LEFT);
-		KeyBindingHelper.registerKeyBinding(KEY_BINDING_SCROLL_DOWN);
-		KeyBindingHelper.registerKeyBinding(KEY_BINDING_SCROLL_RIGHT);
+		KeyBindingHelper.registerKeyBinding(GreatScrollableTooltips.KEY_BINDING_SCROLL_UP);
+		KeyBindingHelper.registerKeyBinding(GreatScrollableTooltips.KEY_BINDING_SCROLL_LEFT);
+		KeyBindingHelper.registerKeyBinding(GreatScrollableTooltips.KEY_BINDING_SCROLL_DOWN);
+		KeyBindingHelper.registerKeyBinding(GreatScrollableTooltips.KEY_BINDING_SCROLL_RIGHT);
 	}
 
 	public static GreatScrollableTooltips getInstance() {
@@ -110,5 +110,13 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 
 	public boolean isRendering() {
 		return rendering;
+	}
+
+	public int getModX() {
+		return this.getHorizontal() * this.getConfig().sensitivity;
+	}
+
+	public int getModY() {
+		return this.getVertical() * this.getConfig().sensitivity;
 	}
 }
