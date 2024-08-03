@@ -12,7 +12,7 @@
 		"sources": "https://github.com/flowerinsnow-lights-opensource/GreatScrollableTooltips",
 		"issues": "https://github.com/flowerinsnow-lights-opensource/GreatScrollableTooltips/issues"
 	},
-	"license": "GPL-3.0",
+	"license": "MPL-2.0",
 	"icon": "assets/great-scrollable-tooltips/icon.png",
 	"environment": "client",
 	"entrypoints": {
