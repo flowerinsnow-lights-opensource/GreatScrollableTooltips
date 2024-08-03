@@ -39,40 +39,40 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		instance = this;
+		GreatScrollableTooltips.instance = this;
 
-		config = new Config();
-		config.saveDefaultConfig();
-		config.load();
+		this.config = new Config();
+		this.config.saveDefaultConfig();
+		this.config.load();
 
 		MouseScrolledInParentElementEvent.EVENT.register((ParentElement parentElement, double mouseX, double mouseY, double horizontalAmount, double verticalAmount) -> {
 			MinecraftClient client = MinecraftClient.getInstance();
-			if (client.currentScreen != null && config.enable && rendering) {
+			if (client.currentScreen != null && this.config.enable && this.rendering) {
 				if (Screen.hasShiftDown()) {
-					horizontal += (int) verticalAmount;
-					vertical += (int) horizontalAmount;
+					this.horizontal += (int) verticalAmount;
+					this.vertical += (int) horizontalAmount;
 				} else {
-					horizontal += (int) horizontalAmount;
-					vertical += (int) verticalAmount;
+					this.horizontal += (int) horizontalAmount;
+					this.vertical += (int) verticalAmount;
 				}
 			}
 			return ActionResult.PASS;
 		});
 
 		RenderMouseoverTooltipEvent.Post.EVENT.register((screen, textRenderer, itemStack, tooltip, context, x, y) -> {
-			rendering = true;
+			GreatScrollableTooltips.this.rendering = true;
 			return ActionResult.PASS;
 		});
 
 		RenderMouseoverTooltipEvent.Miss.EVENT.register(screen -> {
-			rendering = false;
+			GreatScrollableTooltips.this.rendering = false;
 			return ActionResult.PASS;
 		});
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (client.currentScreen == null) {
-				horizontal = 0;
-				vertical = 0;
+				GreatScrollableTooltips.this.horizontal = 0;
+				GreatScrollableTooltips.this.vertical = 0;
 			}
 		});
 
