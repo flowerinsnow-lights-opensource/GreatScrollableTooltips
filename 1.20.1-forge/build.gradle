@@ -165,6 +165,7 @@ dependencies() {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     implementation("online.flowerinsnow.fnml4j:core:${project.version_fnml4j}")
 
+    jarJar("online.flowerinsnow.fnml4j:interface:[${project.version_fnml4j}]")
     jarJar("online.flowerinsnow.fnml4j:core:[${project.version_fnml4j}]")
 
     annotationProcessor('org.spongepowered:mixin:0.8.5:processor')
