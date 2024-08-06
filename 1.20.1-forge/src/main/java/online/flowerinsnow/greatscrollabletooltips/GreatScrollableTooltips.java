@@ -55,7 +55,7 @@ public class GreatScrollableTooltips {
         this.config.load();
 
         ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () ->
-            new ConfigScreenHandler.ConfigScreenFactory(parent -> new ConfigScreen(parent, GreatScrollableTooltips.this.config))
+            new ConfigScreenHandler.ConfigScreenFactory((client, parent) -> new ConfigScreen(parent, GreatScrollableTooltips.this.config))
         );
 
         IEventBus eventBus = MinecraftForge.EVENT_BUS;
