@@ -163,9 +163,9 @@ dependencies() {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    implementation("online.flowerinsnow.fnml:fnml4j-core:${project.version_fnml4j}")
+    implementation("online.flowerinsnow.fnml4j:core:${project.version_fnml4j}")
 
-    jarJar("online.flowerinsnow.fnml:fnml4j-core:[${project.version_fnml4j}]")
+    jarJar("online.flowerinsnow.fnml4j:core:[${project.version_fnml4j}]")
 
     annotationProcessor('org.spongepowered:mixin:0.8.5:processor')
 
@@ -234,4 +234,8 @@ tasks.withType(JavaCompile).configureEach() {
 mixin() {
     add(sourceSets.main, 'mixins.great-scrollable-tooltips.refmap.json')
     config('great-scrollable-tooltips.mixins.json')
+}
+
+jar() {
+    from('LICENSE')
 }
