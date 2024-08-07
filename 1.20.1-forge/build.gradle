@@ -236,7 +236,3 @@ mixin() {
     add(sourceSets.main, 'mixins.great-scrollable-tooltips.refmap.json')
     config('great-scrollable-tooltips.mixins.json')
 }
-
-jar() {
-    from('LICENSE')
-}
