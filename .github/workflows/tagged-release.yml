@@ -26,10 +26,10 @@ jobs:
 
       - name: Distributions with Gradle Wrapper
         run: |
-          cd 24w14a-1.21.1-fabric/
+          cd 24w33a-fabric/
           ./gradlew build
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: 24w14a-1.21.1-fabric/build/libs/*.jar
+          files: 24w33a-fabric/build/libs/*.jar
