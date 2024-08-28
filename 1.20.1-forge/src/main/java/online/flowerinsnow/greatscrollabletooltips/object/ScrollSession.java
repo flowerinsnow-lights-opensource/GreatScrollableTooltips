@@ -1,0 +1,102 @@
+package online.flowerinsnow.greatscrollabletooltips.object;
+
+import net.minecraft.world.item.ItemStack;
+
+import java.util.Objects;
+
+public class ScrollSession {
+    /**
+     * <p>当前垂直滚动值</p>
+     */
+    private int horizontal;
+    /**
+     * <p>当前水平滚动值</p>
+     */
+    private int vertical;
+    /**
+     * <p>本 tick 是否渲染中</p>
+     */
+    private boolean rendering;
+
+    /**
+     * <p>最后一次渲染的物品</p>
+     * <p>记录以方便判断是否要回正</p>
+     */
+    private ItemStack lastItemStackRendered;
+
+    public int getHorizontal() {
+        return this.horizontal;
+    }
+
+    public void setHorizontal(int horizontal) {
+        this.horizontal = horizontal;
+    }
+
+    public void addHorizontal(int value) {
+        this.horizontal += value;
+    }
+
+    public int getVertical() {
+        return this.vertical;
+    }
+
+    public void setVertical(int vertical) {
+        this.vertical = vertical;
+    }
+
+    public void addVertical(int value) {
+        this.vertical += value;
+    }
+
+    public boolean isRendering() {
+        return this.rendering;
+    }
+
+    public void setRendering(boolean rendering) {
+        this.rendering = rendering;
+    }
+
+    public ItemStack getLastItemStackRendered() {
+        return this.lastItemStackRendered;
+    }
+
+    public void setLastItemStackRendered(ItemStack lastItemStackRendered) {
+        this.lastItemStackRendered = lastItemStackRendered;
+    }
+
+    /**
+     * <p>滚动回正</p>
+     */
+    public void resetScroll() {
+        this.horizontal = 0;
+        this.vertical = 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ScrollSession that = (ScrollSession) o;
+        return this.horizontal == that.horizontal && this.vertical == that.vertical && this.rendering == that.rendering && Objects.equals(this.lastItemStackRendered, that.lastItemStackRendered);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + this.horizontal;
+        result = 31 * result + this.vertical;
+        result = 31 * result + (this.rendering ? 1231 : 1237);
+        result = 31 * result + (this.lastItemStackRendered != null ? this.lastItemStackRendered.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ScrollSession{" +
+                "horizontal=" + this.horizontal +
+                ", vertical=" + this.vertical +
+                ", rendering=" + this.rendering +
+                ", lastItemStackRendered=" + this.lastItemStackRendered +
+                '}';
+    }
+}
