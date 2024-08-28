@@ -170,6 +170,8 @@ dependencies() {
 
     annotationProcessor('org.spongepowered:mixin:0.8.5:processor')
 
+    // Iceberg 1.1.21
+    // https://www.curseforge.com/minecraft/mc-mods/iceberg/files/5138899
     implementation(fg.deobf("curse.maven:iceberg-520110:5138899"))
 }
 

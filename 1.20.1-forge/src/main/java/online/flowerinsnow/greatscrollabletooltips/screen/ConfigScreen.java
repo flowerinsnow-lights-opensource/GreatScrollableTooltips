@@ -37,11 +37,34 @@ public class ConfigScreen extends Screen {
                         this.config.enable = true;
                     }
                 })
-                        .bounds(this.width / 2 - 100, this.height / 2 - 60, 200, 20)
+                        .bounds(this.width / 2 - 100, this.height / 2 - 70, 200, 20)
                         .build()
         );
+
         this.addRenderableWidget(
-                this.sensitivitySlider = new AbstractSliderButton(this.width / 2 - 100, this.height / 2 - 35,
+                new Button.Builder(
+                        Component.translatable(this.config.autoReset ?
+                                "great-scrollable-tooltips.ui.config.auto-reset.true" :
+                                "great-scrollable-tooltips.ui.config.auto-reset.false"
+                        ),
+                        button -> {
+                            ConfigScreen instance = ConfigScreen.this;
+                            if (instance.config.autoReset) {
+                                button.setMessage(Component.translatable("great-scrollable-tooltips.ui.config.auto-reset.false"));
+                                instance.config.autoReset = false;
+                            } else {
+                                button.setMessage(Component.translatable("great-scrollable-tooltips.ui.config.auto-reset.true"));
+                                instance.config.autoReset = true;
+                            }
+                        }
+                )
+                        .pos(this.width / 2 - 100, this.height / 2 - 45)
+                        .size(200, 20)
+                        .build()
+        );
+
+        this.addRenderableWidget(
+                this.sensitivitySlider = new AbstractSliderButton(this.width / 2 - 100, this.height / 2 - 20,
                         200, 20, Component.translatable(
                         "great-scrollable-tooltips.ui.config.sensitivity",
                         this.config.sensitivity
@@ -64,7 +87,7 @@ public class ConfigScreen extends Screen {
                     config.load();
                     Minecraft.getInstance().setScreen(new ConfigScreen(parent, config));
                 })
-                        .bounds(this.width / 2 - 100, this.height / 2 - 10, 200, 20)
+                        .bounds(this.width / 2 - 100, this.height / 2 + 5, 200, 20)
                         .build()
         );
         this.addRenderableWidget(
@@ -73,12 +96,12 @@ public class ConfigScreen extends Screen {
                     ConfigScreen.this.config.save();
                     Minecraft.getInstance().setScreen(parent);
                 })
-                        .bounds(this.width / 2 - 100, this.height / 2 + 15, 200, 20)
+                        .bounds(this.width / 2 - 100, this.height / 2 + 30, 200, 20)
                         .build()
         );
         this.addRenderableWidget(
                 new Button.Builder(Component.translatable("great-scrollable-tooltips.ui.config.discard-and-exit"), button -> Minecraft.getInstance().setScreen(ConfigScreen.this.parent))
-                        .bounds(this.width / 2 - 100, this.height / 2 + 40, 200, 20)
+                        .bounds(this.width / 2 - 100, this.height / 2 + 55, 200, 20)
                         .build()
         );
     }

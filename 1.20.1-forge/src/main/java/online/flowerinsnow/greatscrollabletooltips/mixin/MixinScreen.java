@@ -23,7 +23,7 @@ public class MixinScreen {
     )
     private int modifyBackgroundX(int x) {
         GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
-        return x + (instance.getHorizontal() * instance.getConfig().sensitivity);
+        return x + (instance.getScrollSession().getHorizontal() * instance.getConfig().sensitivity);
     }
 
     @ModifyArg(
@@ -37,7 +37,7 @@ public class MixinScreen {
     )
     private int modifyTextX(int x) {
         GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
-        return x + (instance.getHorizontal() * instance.getConfig().sensitivity);
+        return x + (instance.getScrollSession().getHorizontal() * instance.getConfig().sensitivity);
     }
 
     @ModifyArg(
@@ -52,7 +52,7 @@ public class MixinScreen {
     )
     private int modifyBackgroundY(int y) {
         GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
-        return y + (instance.getVertical() * instance.getConfig().sensitivity);
+        return y + (instance.getScrollSession().getVertical() * instance.getConfig().sensitivity);
     }
 
     @ModifyArg(
@@ -66,6 +66,6 @@ public class MixinScreen {
     )
     private int modifyTextY(int y) {
         GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
-        return y + (instance.getVertical() * instance.getConfig().sensitivity);
+        return y + (instance.getScrollSession().getVertical() * instance.getConfig().sensitivity);
     }
 }
