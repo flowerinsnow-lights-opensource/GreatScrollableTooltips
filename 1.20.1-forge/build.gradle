@@ -170,9 +170,9 @@ dependencies() {
 
     annotationProcessor('org.spongepowered:mixin:0.8.5:processor')
 
-    // Iceberg 1.1.21
-    // https://www.curseforge.com/minecraft/mc-mods/iceberg/files/5138899
-    implementation(fg.deobf("curse.maven:iceberg-520110:5138899"))
+    // LegendaryTooltips 1.4.5
+    // https://www.curseforge.com/minecraft/mc-mods/legendary-tooltips/files/4662781
+    implementation(fg.deobf("curse.maven:legendary-tooltips-532127:4662781"))
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
