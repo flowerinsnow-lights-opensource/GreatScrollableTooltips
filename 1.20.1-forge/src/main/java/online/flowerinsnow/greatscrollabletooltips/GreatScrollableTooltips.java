@@ -1,9 +1,9 @@
 package online.flowerinsnow.greatscrollabletooltips;
 
-import com.mojang.logging.LogUtils;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -18,24 +18,21 @@ import online.flowerinsnow.greatscrollabletooltips.config.Config;
 import online.flowerinsnow.greatscrollabletooltips.event.MouseScrolledInParentElementEvent;
 import online.flowerinsnow.greatscrollabletooltips.event.RenderMouseoverTooltipEvent;
 import online.flowerinsnow.greatscrollabletooltips.listener.CursorKeyListener;
+import online.flowerinsnow.greatscrollabletooltips.object.ScrollSession;
 import online.flowerinsnow.greatscrollabletooltips.screen.ConfigScreen;
 import org.lwjgl.glfw.GLFW;
-import org.slf4j.Logger;
 
 import java.util.function.Consumer;
 
 @Mod(GreatScrollableTooltips.MODID)
 public class GreatScrollableTooltips {
     public static final String MODID = "great_scrollable_tooltips";
-    private static final Logger LOGGER = LogUtils.getLogger();
 
     private static GreatScrollableTooltips instance;
 
     private Config config;
 
-    private int horizontal;
-    private int vertical;
-    private boolean rendering;
+    private ScrollSession scrollSession;
 
     public static final Lazy<KeyMapping> KEY_BINDING_SCROLL_UP = Lazy.of(() -> new KeyMapping("great-scrollable-tooltips.key-binding.scroll-up", GLFW.GLFW_KEY_UP, "great-scrollable-tooltips.key-binding.category"));
     public static final Lazy<KeyMapping> KEY_BINDING_SCROLL_LEFT = Lazy.of(() -> new KeyMapping("great-scrollable-tooltips.key-binding.scroll-left", GLFW.GLFW_KEY_LEFT, "great-scrollable-tooltips.key-binding.category"));
@@ -49,6 +46,7 @@ public class GreatScrollableTooltips {
 
     public void onClientSetup(FMLClientSetupEvent event) {
         GreatScrollableTooltips.instance = this;
+        this.scrollSession = new ScrollSession();
 
         this.config = new Config();
         this.config.saveDefaultConfig();
@@ -60,30 +58,45 @@ public class GreatScrollableTooltips {
 
         IEventBus eventBus = MinecraftForge.EVENT_BUS;
 
+        // 鼠标滚动时
         eventBus.addListener((Consumer<MouseScrolledInParentElementEvent>) e -> {
             Minecraft client = Minecraft.getInstance();
-            if (client.screen != null && GreatScrollableTooltips.this.config.enable && GreatScrollableTooltips.this.rendering) {
+            if (client.screen != null && GreatScrollableTooltips.this.config.enable && GreatScrollableTooltips.this.getScrollSession().isRendering()) { // 只有渲染物品提示时才允许滚动
+                ScrollSession session = GreatScrollableTooltips.this.getScrollSession();
                 if (Screen.hasShiftDown()) {
-                    GreatScrollableTooltips.this.horizontal += (int) e.getAmount();
+                    session.addHorizontal((int) e.getAmount());
                 } else {
-                    GreatScrollableTooltips.this.vertical += (int) e.getAmount();
+                    session.addVertical((int) e.getAmount());
                 }
             }
         });
 
-        eventBus.addListener((Consumer<RenderMouseoverTooltipEvent.Post>) e ->
-                GreatScrollableTooltips.this.rendering = true
-        );
+        eventBus.addListener((Consumer<RenderMouseoverTooltipEvent.Post>) e -> {
+            ScrollSession session = GreatScrollableTooltips.this.getScrollSession();
+            session.setRendering(true);
+            ItemStack itemStack = e.getStack();
+            if (itemStack != session.getLastItemStackRendered()) {
+                session.setLastItemStackRendered(itemStack);
 
-        eventBus.addListener((Consumer<RenderMouseoverTooltipEvent.Miss>) e ->
-                GreatScrollableTooltips.this.rendering = false
-        );
+                if (GreatScrollableTooltips.this.config.autoReset) {
+                    session.resetScroll();
+                }
+            }
+        });
+
+        eventBus.addListener((Consumer<RenderMouseoverTooltipEvent.Miss>) e -> {
+            ScrollSession session = GreatScrollableTooltips.this.getScrollSession();
+            session.setRendering(false);
+            session.setLastItemStackRendered(null);
+            if (GreatScrollableTooltips.this.config.autoReset) {
+                session.resetScroll();
+            }
+        });
 
         eventBus.addListener((Consumer<TickEvent.ClientTickEvent>) e -> {
             if (e.phase == TickEvent.Phase.END) {
                 if (Minecraft.getInstance().screen == null) {
-                    GreatScrollableTooltips.this.horizontal = 0;
-                    GreatScrollableTooltips.this.vertical = 0;
+                    GreatScrollableTooltips.this.getScrollSession().resetScroll();
                 }
             }
         });
@@ -93,10 +106,10 @@ public class GreatScrollableTooltips {
     }
 
     public void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-        event.register(KEY_BINDING_SCROLL_UP.get());
-        event.register(KEY_BINDING_SCROLL_LEFT.get());
-        event.register(KEY_BINDING_SCROLL_DOWN.get());
-        event.register(KEY_BINDING_SCROLL_RIGHT.get());
+        event.register(GreatScrollableTooltips.KEY_BINDING_SCROLL_UP.get());
+        event.register(GreatScrollableTooltips.KEY_BINDING_SCROLL_LEFT.get());
+        event.register(GreatScrollableTooltips.KEY_BINDING_SCROLL_DOWN.get());
+        event.register(GreatScrollableTooltips.KEY_BINDING_SCROLL_RIGHT.get());
     }
 
     public static GreatScrollableTooltips getInstance() {
@@ -107,23 +120,7 @@ public class GreatScrollableTooltips {
         return this.config;
     }
 
-    public int getHorizontal() {
-        return this.horizontal;
-    }
-
-    public void setHorizontal(int horizontal) {
-        this.horizontal = horizontal;
-    }
-
-    public int getVertical() {
-        return this.vertical;
-    }
-
-    public void setVertical(int vertical) {
-        this.vertical = vertical;
-    }
-
-    public boolean isRendering() {
-        return this.rendering;
+    public ScrollSession getScrollSession() {
+        return this.scrollSession;
     }
 }

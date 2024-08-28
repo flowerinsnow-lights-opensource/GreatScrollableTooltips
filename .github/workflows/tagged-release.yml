@@ -26,10 +26,10 @@ jobs:
 
       - name: Distributions with Gradle Wrapper
         run: |
-          cd 1.18.2-forge/
+          cd 1.20.1-forge/
           ./gradlew build
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: 1.18.2-forge/build/libs/*.jar
+          files: 1.20.1-forge/build/libs/*.jar

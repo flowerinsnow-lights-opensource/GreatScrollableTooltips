@@ -20,6 +20,8 @@ public class Config {
     public boolean enable;
     public int sensitivity;
 
+    public boolean autoReset;
+
     public void saveDefaultConfig() {
         BiConsumer<Throwable, String> crashFunction = this.crashFunction();
         Path configFile = this.getConfigFile();
@@ -48,8 +50,9 @@ public class Config {
         BiConsumer<Throwable, String> crashFunction = this.crashFunction();
         try {
             this.rootNode = FNML4J.parse(getConfigFile(), StandardCharsets.UTF_8);
-            this.enable = rootNode.getChildNodeNotNull("enable", FNML4JPresentParser.BOOLEAN, StringNode.class);
-            this.sensitivity = rootNode.getChildNodeNotNull("sensitivity", FNML4JPresentParser.INT, StringNode.class);
+            this.enable = Boolean.parseBoolean(this.rootNode.getChildNode("enable", FNML4JPresentParser.STRING, StringNode.class));
+            this.sensitivity = this.rootNode.getChildNodeNotNull("sensitivity", FNML4JPresentParser.INT, StringNode.class);
+            this.autoReset = Boolean.parseBoolean(this.rootNode.getChildNode("auto_reset", FNML4JPresentParser.STRING, StringNode.class));
         } catch (IOException e) {
             crashFunction.accept(e, "Failed to load config.");
         }
@@ -60,6 +63,7 @@ public class Config {
         try (FileWriter fw = new FileWriter(getConfigFile().toFile(), StandardCharsets.UTF_8)) {
             this.rootNode.set("enable", new StringNode(Boolean.toString(this.enable)));
             this.rootNode.set("sensitivity", new StringNode(Integer.toString(this.sensitivity)));
+            this.rootNode.set("auto_reset", new StringNode(Boolean.toString(this.autoReset)));
             this.rootNode.writeRoot(0, fw);
         } catch (IOException e) {
             crashFunction.accept(e, "Failed to save config.");

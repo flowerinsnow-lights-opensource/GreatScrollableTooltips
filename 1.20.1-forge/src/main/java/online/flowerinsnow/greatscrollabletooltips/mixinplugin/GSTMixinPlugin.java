@@ -20,9 +20,9 @@ public class GSTMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        // iceberg
-        if ("online.flowerinsnow.greatscrollabletooltips.mixin.MixinPostRenderTooltipExtEvent".equals(mixinClassName)) {
-            return FMLLoader.getLoadingModList().getModFileById("iceberg") != null;
+        // LegendaryTooltips
+        if ("online.flowerinsnow.greatscrollabletooltips.mixin.legendarytooltips.MixinLegendaryTooltips".equals(mixinClassName) || "online.flowerinsnow.greatscrollabletooltips.mixin.legendarytooltips.MixinItemModelComponent".equals(mixinClassName)) {
+            return FMLLoader.getLoadingModList().getModFileById("legendarytooltips") != null;
         }
         return true;
     }
