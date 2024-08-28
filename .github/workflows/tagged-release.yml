@@ -15,10 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: 21
+          java-version: 17
           distribution: temurin
 
       - name: Setup Gradle
@@ -26,10 +26,10 @@ jobs:
 
       - name: Distributions with Gradle Wrapper
         run: |
-          cd 24w33a-fabric/
+          cd 1.18.2-forge/
           ./gradlew build
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: 24w33a-fabric/build/libs/*.jar
+          files: 1.18.2-forge/build/libs/*.jar
