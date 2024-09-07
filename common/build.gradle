@@ -1,0 +1,93 @@
+plugins() {
+    id('java')
+    id('maven-publish')
+}
+
+group = 'online.flowerinsnow.greatscrollabletooltips'
+version = '1.0.0'
+
+repositories() {
+    mavenCentral()
+}
+
+dependencies() {
+    implementation("com.electronwill.night-config:toml:${night_config_version}")
+
+    testImplementation(platform("org.junit:junit-bom:${junit_version}"))
+    testImplementation('org.junit.jupiter:junit-jupiter')
+}
+
+test() {
+    useJUnitPlatform()
+}
+
+java() {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+tasks.withType(JavaCompile).configureEach() {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc).configureEach() {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    options.encoding = 'UTF-8'
+}
+
+jar() {
+    from(file('../LICENSE'))
+    from(file('../NOTICE'))
+}
+
+publishing() {
+    publications() {
+        mavenJava(MavenPublication) {
+            repositories() {
+                maven() {
+                    url = "${System.getenv('PUBLISH_REPO_URL')}"
+                    credentials() {
+                        username = "${System.getenv('PUBLISH_REPO_USERNAME')}"
+                        password = "${System.getenv('PUBLISH_REPO_PASSWORD')}"
+                    }
+                }
+            }
+
+            pom() {
+                name = rootProject.name
+                description = 'Minecraft Mod/Allow scrolling of item tooltips in the inventory.'
+                url = 'https://github.com/flowerinsnow-lights-opensource/GreatScrollableTooltips'
+
+                licenses() {
+                    license() {
+                        name = 'Mozilla Public License Version 2.0'
+                        url = 'https://mozilla.org/MPL/2.0/'
+                    }
+                }
+
+                developers() {
+                    developer() {
+                        id = 'flowerinsnow'
+                        name = '冬花ice'
+                        email = 'flowerimsnow@gmail.com'
+                    }
+                }
+
+                scm() {
+                    connection = 'scm:git:git://github.com/flowerinsnow-lights-opensource/GreatScrollableTooltips.git'
+                    developerConnection = 'scm:git:ssh://github.com:flowerinsnow-lights-opensource/GreatScrollableTooltips.git'
+                    url = 'https://github.com/flowerinsnow-lights-opensource/GreatScrollableTooltips/tree/master'
+                }
+            }
+
+            from(components.java)
+        }
+    }
+
+    repositories() {
+        mavenLocal()
+    }
+}
