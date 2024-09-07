@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(ItemModelComponent.class)
-public class MixinItemModelComponet {
+public class MixinItemModelComponent {
     @ModifyArgs(
             method = "drawItems",
             at = @At(
@@ -122,13 +122,13 @@ public class MixinItemModelComponet {
         GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
         ScrollSession<ItemStack> session = instance.getScrollSession();
         int sensitivity = instance.getConfig().sensitivity;
-        args.set(0, ((int) args.get(0)) + session.getHorizontal() * sensitivity);
-        args.set(1, ((int) args.get(1)) + session.getVertical() * sensitivity);
+        args.set(0, (float) args.get(0) + (float) session.getHorizontal() * (float) sensitivity);
+        args.set(1, (float) args.get(1) + (float) session.getVertical() * (float) sensitivity);
     }
 
 
 
-    @ModifyArgs(
+    /*@ModifyArgs(
             method = "drawItems",
             at = @At(
                     value = "INVOKE",
@@ -138,16 +138,16 @@ public class MixinItemModelComponet {
     )
     public void modifyModel(Args args) {
         this.modifyArgs(args);
-    }
+    }*/
 
     @Unique
     private void modifyArgs(Args args) {
         GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
         ScrollSession<ItemStack> session = instance.getScrollSession();
         int sensitivity = instance.getConfig().sensitivity;
-        args.set(1, ((int) args.get(1)) + session.getHorizontal() * sensitivity);
-        args.set(2, ((int) args.get(2)) + session.getVertical() * sensitivity);
-        args.set(3, ((int) args.get(3)) + session.getHorizontal() * sensitivity);
-        args.set(4, ((int) args.get(4)) + session.getVertical() * sensitivity);
+        args.set(2, ((int) args.get(2)) + session.getHorizontal() * sensitivity);
+        args.set(3, ((int) args.get(3)) + session.getVertical() * sensitivity);
+        args.set(4, ((int) args.get(4)) + session.getHorizontal() * sensitivity);
+        args.set(5, ((int) args.get(5)) + session.getVertical() * sensitivity);
     }
 }
