@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import java.util.List;
 import java.util.Set;
 
-public class GSTMixinPlugin implements IMixinConfigPlugin {
+public class GreatScrollableTooltipsMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
     }
@@ -20,7 +20,7 @@ public class GSTMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if ("online.flowerinsnow.greatscrollabletooltips.mixin.MixinItemModelComponent".equals(mixinClassName) || "online.flowerinsnow.greatscrollabletooltips.mixin.MixinTooltipDecor".equals(mixinClassName)) {
+        if ("online.flowerinsnow.greatscrollabletooltips.mixin.legendarytooltips.MixinLegendaryTooltips".equals(mixinClassName) || "online.flowerinsnow.greatscrollabletooltips.mixin.legendarytooltips.MixinItemModelComponent".equals(mixinClassName)) {
             return FabricLoader.getInstance().isModLoaded("legendarytooltips");
         }
         return true;

@@ -5,39 +5,34 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.ParentElement;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import online.flowerinsnow.greatscrollabletooltips.config.Config;
+import net.minecraft.util.crash.CrashReport;
+import online.flowerinsnow.greatscrollabletooltips.config.GreatScrollableTooltipsConfig;
 import online.flowerinsnow.greatscrollabletooltips.event.HandledScreenKeyPressedEvent;
-import online.flowerinsnow.greatscrollabletooltips.event.MouseScrolledInParentElementEvent;
-import online.flowerinsnow.greatscrollabletooltips.event.RenderMouseoverTooltipEvent;
-import online.flowerinsnow.greatscrollabletooltips.listener.CursorKeyListener;
+import online.flowerinsnow.greatscrollabletooltips.event.MouseScrolledInScreenEvent;
+import online.flowerinsnow.greatscrollabletooltips.event.RenderTooltipEvent;
+import online.flowerinsnow.greatscrollabletooltips.listener.ScreenKeyPressedListener;
+import online.flowerinsnow.greatscrollabletooltips.object.ScrollSession;
+import online.flowerinsnow.greatscrollabletooltips.provider.ModEnvironmentProvider;
 import org.lwjgl.glfw.GLFW;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.io.InputStream;
+import java.nio.file.Path;
 
 @Environment(EnvType.CLIENT)
 public class GreatScrollableTooltips implements ClientModInitializer {
 	public static final String MODID = "great-scrollable-tooltips";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
 	private static GreatScrollableTooltips instance;
 
-	private Config config;
+	private GreatScrollableTooltipsConfig config;
 
-	private int horizontal;
-	private int vertical;
-	private boolean rendering;
-
-	/**
-	 * <p>最后一次渲染的物品</p>
-	 * <p>记录以方便</p>
-	 */
-	private ItemStack lastItemStackRendered;
+	private ScrollSession<ItemStack> scrollSession;
 
 	public static final KeyBinding KEY_BINDING_SCROLL_UP = new KeyBinding("great-scrollable-tooltips.key-binding.scroll-up", GLFW.GLFW_KEY_UP, "great-scrollable-tooltips.key-binding.category");
 	public static final KeyBinding KEY_BINDING_SCROLL_LEFT = new KeyBinding("great-scrollable-tooltips.key-binding.scroll-left", GLFW.GLFW_KEY_LEFT, "great-scrollable-tooltips.key-binding.category");
@@ -47,59 +42,84 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		GreatScrollableTooltips.instance = this;
+		this.scrollSession = new ScrollSession<>();
 
-		this.config = new Config();
+		this.initConfig();
+		this.initListeners();
+		this.initKeyBindings();
+	}
+
+	private void initConfig() {
+		this.config = new GreatScrollableTooltipsConfig(new ModEnvironmentProvider() {
+			@Override
+			public InputStream getDefaultConfigAsStream() {
+				return GreatScrollableTooltips.class.getResourceAsStream("/config.toml");
+			}
+
+			@Override
+			public Path getConfigFile() {
+				return FabricLoader.getInstance().getConfigDir().resolve(GreatScrollableTooltips.MODID + ".toml");
+			}
+
+			@Override
+			public void crash(Throwable throwable, String msg) {
+				MinecraftClient.getInstance().printCrashReport(CrashReport.create(throwable, msg));
+			}
+		});
 		this.config.saveDefaultConfig();
 		this.config.load();
+	}
 
-		// 鼠标滚动时
-		MouseScrolledInParentElementEvent.EVENT.register((ParentElement parentElement, double mouseX, double mouseY, double horizontalAmount, double verticalAmount) -> {
+	private void initListeners() {
+		MouseScrolledInScreenEvent.EVENT.register((screen, mouseX, mouseY, horizontalAmount, verticalAmount) -> {
 			MinecraftClient client = MinecraftClient.getInstance();
-			if (client.currentScreen != null && this.config.enable && this.rendering) { // 只有渲染物品提示时才允许滚动
-				if (Screen.hasShiftDown()) {
-					this.horizontal += (int) verticalAmount;
-					this.vertical += (int) horizontalAmount;
+			GreatScrollableTooltips instance = GreatScrollableTooltips.this;
+			ScrollSession<ItemStack> session = instance.getScrollSession();
+			if (client.currentScreen != null && instance.config.enable && session.isRendering()) {
+				if (!Screen.hasShiftDown()) {
+					session.addHorizontal((int) horizontalAmount);
+					session.addVertical((int) verticalAmount);
 				} else {
-					this.horizontal += (int) horizontalAmount;
-					this.vertical += (int) verticalAmount;
+					session.addHorizontal((int) verticalAmount);
+					session.addVertical((int) horizontalAmount);
 				}
 			}
 			return ActionResult.PASS;
 		});
 
-		// 渲染后
-		RenderMouseoverTooltipEvent.Post.EVENT.register((screen, textRenderer, itemStack, tooltip, context, x, y) -> {
-			GreatScrollableTooltips instance = GreatScrollableTooltips.this;
-			instance.rendering = true;
-			if (itemStack != instance.lastItemStackRendered) {
-				instance.lastItemStackRendered = itemStack;
+		RenderTooltipEvent.Post.EVENT.register((screen, context, textRenderer, itemStack, x, y) -> {
+			ScrollSession<ItemStack> session = GreatScrollableTooltips.this.getScrollSession();
+			session.setRendering(true);
+			if (itemStack != session.getLastItemStackRendered()) {
+				session.setLastItemStackRendered(itemStack);
 
-				if (instance.config.autoReset) {
-					instance.resetScroll();
+				if (GreatScrollableTooltips.this.config.autoReset) {
+					session.resetScroll();
 				}
 			}
 			return ActionResult.PASS;
 		});
 
-		// 未渲染时
-		RenderMouseoverTooltipEvent.Miss.EVENT.register(screen -> {
-			GreatScrollableTooltips instance = GreatScrollableTooltips.this;
-			instance.rendering = false;
-			instance.lastItemStackRendered = null;
-			if (instance.config.autoReset) {
-				instance.resetScroll();
+		RenderTooltipEvent.Miss.EVENT.register((screen, context, textRenderer, x, y) -> {
+			ScrollSession<ItemStack> session = GreatScrollableTooltips.this.getScrollSession();
+			session.setRendering(false);
+			session.setLastItemStackRendered(null);
+			if (GreatScrollableTooltips.this.config.autoReset) {
+				session.resetScroll();
 			}
 			return ActionResult.PASS;
 		});
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (client.currentScreen == null) {
-				GreatScrollableTooltips.this.resetScroll();
+				GreatScrollableTooltips.this.getScrollSession().resetScroll();
 			}
 		});
 
-		HandledScreenKeyPressedEvent.EVENT.register(new CursorKeyListener());
+		HandledScreenKeyPressedEvent.EVENT.register(new ScreenKeyPressedListener());
+	}
 
+	private void initKeyBindings() {
 		KeyBindingHelper.registerKeyBinding(GreatScrollableTooltips.KEY_BINDING_SCROLL_UP);
 		KeyBindingHelper.registerKeyBinding(GreatScrollableTooltips.KEY_BINDING_SCROLL_LEFT);
 		KeyBindingHelper.registerKeyBinding(GreatScrollableTooltips.KEY_BINDING_SCROLL_DOWN);
@@ -107,46 +127,14 @@ public class GreatScrollableTooltips implements ClientModInitializer {
 	}
 
 	public static GreatScrollableTooltips getInstance() {
-		return instance;
+		return GreatScrollableTooltips.instance;
 	}
 
-	public Config getConfig() {
+	public GreatScrollableTooltipsConfig getConfig() {
 		return this.config;
 	}
 
-	public int getHorizontal() {
-		return this.horizontal;
-	}
-
-	public void setHorizontal(int horizontal) {
-		this.horizontal = horizontal;
-	}
-
-	public int getVertical() {
-		return this.vertical;
-	}
-
-	public void setVertical(int vertical) {
-		this.vertical = vertical;
-	}
-
-	/**
-	 * <p>滚动回正</p>
-	 */
-	public void resetScroll() {
-		this.horizontal = 0;
-		this.vertical = 0;
-	}
-
-	public boolean isRendering() {
-		return this.rendering;
-	}
-
-	public int getModX() {
-		return this.getHorizontal() * this.getConfig().sensitivity;
-	}
-
-	public int getModY() {
-		return this.getVertical() * this.getConfig().sensitivity;
+	public ScrollSession<ItemStack> getScrollSession() {
+		return this.scrollSession;
 	}
 }
