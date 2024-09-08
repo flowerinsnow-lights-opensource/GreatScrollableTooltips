@@ -43,7 +43,7 @@ dependencies() {
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
 	modImplementation("com.terraformersmc:modmenu:${modmenu_version}")
-	modImplementation('curse.maven:legendary-tooltips-fabric-542478:4938105')
+	modImplementation('curse.maven:legendary-tooltips-fabric-542478:5591020')
 	include(api("online.flowerinsnow.greatscrollabletooltips:common:${common_module_version}"))
 	include(api("com.electronwill.night-config:core:${night_config_version}"))
 	include(api("com.electronwill.night-config:toml:${night_config_version}"))
