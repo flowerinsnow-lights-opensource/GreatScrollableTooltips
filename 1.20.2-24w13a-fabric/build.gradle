@@ -18,7 +18,6 @@ repositories() {
 	maven() {
 		url = 'https://maven.pkg.github.com/flowerinsnow-lights-opensource/GreatScrollableTooltips'
 		credentials() {
-			println("${System.getenv('GITHUB_USERNAME')}")
 			username = "${System.getenv('GITHUB_USERNAME')}"
 			password = "${System.getenv('GITHUB_TOKEN')}"
 		}
