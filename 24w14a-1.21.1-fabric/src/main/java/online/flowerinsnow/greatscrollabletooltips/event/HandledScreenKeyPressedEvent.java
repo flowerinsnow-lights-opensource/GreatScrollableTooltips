@@ -1,16 +1,20 @@
 package online.flowerinsnow.greatscrollabletooltips.event;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.util.ActionResult;
 
 /**
- * 返回 Success 或 Fail 时取消事件
+ * 返回 FAIL 时取消事件
  */
+@Environment(EnvType.CLIENT)
 public interface HandledScreenKeyPressedEvent {
-    Event<HandledScreenKeyPressedEvent> EVENT = EventFactory.createArrayBacked(HandledScreenKeyPressedEvent.class, listeners -> (keyCode, scanCode, modifiers) -> {
+    Event<HandledScreenKeyPressedEvent> EVENT = EventFactory.createArrayBacked(HandledScreenKeyPressedEvent.class, listeners -> (screen, keyCode, scanCode, modifiers) -> {
         for (HandledScreenKeyPressedEvent listener : listeners) {
-            ActionResult actionResult = listener.keyPressed(keyCode, scanCode, modifiers);
+            ActionResult actionResult = listener.keyPressed(screen, keyCode, scanCode, modifiers);
             if (actionResult != ActionResult.PASS) {
                 return actionResult;
             }
@@ -18,5 +22,5 @@ public interface HandledScreenKeyPressedEvent {
         return ActionResult.PASS;
     });
 
-    ActionResult keyPressed(int keyCode, int scanCode, int modifiers);
+    ActionResult keyPressed(HandledScreen<?> screen, int keyCode, int scanCode, int modifiers);
 }

@@ -6,16 +6,13 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 
-import java.util.List;
-
-public interface RenderMouseoverTooltipEvent {
+public interface RenderTooltipEvent {
     interface Post {
-        Event<Post> EVENT = EventFactory.createArrayBacked(Post.class, listeners -> (handledScreen, textRenderer, itemStack, tooltip, context, x, y) -> {
+        Event<Post> EVENT = EventFactory.createArrayBacked(Post.class, listeners -> (screen, context, textRenderer, itemStack, x, y) -> {
             for (Post listener : listeners) {
-                ActionResult actionResult = listener.endDrawMouseoverTooltip(handledScreen, textRenderer, itemStack, tooltip, context, x, y);
+                ActionResult actionResult = listener.postRenderTooltip(screen, context, textRenderer, itemStack, x, y);
                 if (actionResult != ActionResult.PASS) {
                     return actionResult;
                 }
@@ -23,13 +20,13 @@ public interface RenderMouseoverTooltipEvent {
             return ActionResult.PASS;
         });
 
-        ActionResult endDrawMouseoverTooltip(HandledScreen<?> screen, TextRenderer textRenderer, ItemStack itemStack, List<Text> tooltip, DrawContext context, int x, int y);
+        ActionResult postRenderTooltip(HandledScreen<?> screen, DrawContext context, TextRenderer textRenderer, ItemStack itemStack, int x, int y);
     }
 
     interface Miss {
-        Event<Miss> EVENT = EventFactory.createArrayBacked(Miss.class, listeners -> screen -> {
+        Event<Miss> EVENT = EventFactory.createArrayBacked(Miss.class, listeners -> (screen, context, textRenderer, x, y) -> {
             for (Miss listener : listeners) {
-                ActionResult actionResult = listener.onMiss(screen);
+                ActionResult actionResult = listener.missRenderTooltip(screen, context, textRenderer, x, y);
                 if (actionResult != ActionResult.PASS) {
                     return actionResult;
                 }
@@ -37,6 +34,6 @@ public interface RenderMouseoverTooltipEvent {
             return ActionResult.PASS;
         });
 
-        ActionResult onMiss(HandledScreen<?> screen);
+        ActionResult missRenderTooltip(HandledScreen<?> screen, DrawContext context, TextRenderer textRenderer, int x, int y);
     }
 }
