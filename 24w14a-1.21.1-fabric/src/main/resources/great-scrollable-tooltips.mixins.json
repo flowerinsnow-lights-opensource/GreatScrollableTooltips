@@ -10,5 +10,6 @@
     ],
     "injectors": {
         "defaultRequire": 1
-	}
+	},
+    "plugin": "online.flowerinsnow.greatscrollabletooltips.mixinplugin.GreatScrollableTooltipsMixinPlugin"
 }
