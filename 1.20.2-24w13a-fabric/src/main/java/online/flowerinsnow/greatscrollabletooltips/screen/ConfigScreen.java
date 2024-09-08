@@ -8,7 +8,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.text.Text;
-import online.flowerinsnow.greatscrollabletooltips.GreatScrollableTooltips;
 import online.flowerinsnow.greatscrollabletooltips.config.GreatScrollableTooltipsConfig;
 
 import java.math.BigDecimal;
@@ -40,7 +39,7 @@ public class ConfigScreen extends Screen {
                                         config.enable = true;
                                     }
                                 })
-                        .position(this.width / 2 - 100, this.height / 2 - 60)
+                        .position(this.width / 2 - 100, this.height / 2 - 70)
                         .size(200, 20)
                         .build()
         );
@@ -64,7 +63,7 @@ public class ConfigScreen extends Screen {
         );
 
         this.addDrawableChild(
-                this.sensitivitySlider = new SliderWidget(this.width / 2 - 100, this.height / 2 - 35,
+                this.sensitivitySlider = new SliderWidget(this.width / 2 - 100, this.height / 2 - 20,
                         200, 20, Text.translatable(
                         "great-scrollable-tooltips.ui.config.sensitivity",
                         this.config.sensitivity
@@ -94,7 +93,7 @@ public class ConfigScreen extends Screen {
                                     instance.config.load();
                                     MinecraftClient.getInstance().setScreen(new ConfigScreen(instance.parent, instance.config));
                                 })
-                        .position(this.width / 2 - 100, this.height / 2 - 10)
+                        .position(this.width / 2 - 100, this.height / 2 + 5)
                         .size(200, 20)
                         .build()
         );
@@ -112,7 +111,7 @@ public class ConfigScreen extends Screen {
                                     config.save();
                                     MinecraftClient.getInstance().setScreen(instance.parent);
                                 })
-                        .position(this.width / 2 - 100, this.height / 2 + 15)
+                        .position(this.width / 2 - 100, this.height / 2 + 30)
                         .size(200, 20)
                         .build()
         );
@@ -120,7 +119,7 @@ public class ConfigScreen extends Screen {
                 ButtonWidget.builder(
                                 Text.translatable("great-scrollable-tooltips.ui.config.discard-and-exit"),
                                 button -> MinecraftClient.getInstance().setScreen(ConfigScreen.this.parent)
-                        ).position(this.width / 2 - 100, this.height / 2 + 40)
+                        ).position(this.width / 2 - 100, this.height / 2 + 55)
                         .size(200, 20)
                         .build()
         );
