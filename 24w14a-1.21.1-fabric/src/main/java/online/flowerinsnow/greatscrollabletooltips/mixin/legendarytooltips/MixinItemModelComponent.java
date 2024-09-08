@@ -114,7 +114,7 @@ public class MixinItemModelComponent {
             method = "drawItems",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V",
+                    target = "Lorg/joml/Matrix4fStack;translate(FFF)Lorg/joml/Matrix4f;",
                     ordinal = 0
             )
     )
