@@ -27,7 +27,7 @@
 		"great-scrollable-tooltips.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.14.22",
+		"fabricloader": ">=0.15.6",
 		"minecraft": ">=1.20.2 <=1.20.5-alpha.24.13.a",
 		"java": ">=17",
 		"fabric-api": ">=0.89.0"
