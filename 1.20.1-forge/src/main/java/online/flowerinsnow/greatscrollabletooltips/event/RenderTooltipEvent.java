@@ -10,10 +10,10 @@ import net.minecraftforge.eventbus.api.Event;
 import java.util.Objects;
 
 @OnlyIn(Dist.CLIENT)
-public class RenderMouseoverTooltipEvent extends Event {
+public class RenderTooltipEvent extends Event {
     protected final AbstractContainerScreen<?> screen;
 
-    protected RenderMouseoverTooltipEvent(AbstractContainerScreen<?> screen) {
+    protected RenderTooltipEvent(AbstractContainerScreen<?> screen) {
         this.screen = screen;
     }
 
@@ -25,7 +25,7 @@ public class RenderMouseoverTooltipEvent extends Event {
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        RenderMouseoverTooltipEvent that = (RenderMouseoverTooltipEvent) object;
+        RenderTooltipEvent that = (RenderTooltipEvent) object;
         return Objects.equals(this.screen, that.screen);
     }
 
@@ -43,7 +43,7 @@ public class RenderMouseoverTooltipEvent extends Event {
                 '}';
     }
 
-    public static class Post extends RenderMouseoverTooltipEvent {
+    public static class Post extends RenderTooltipEvent {
         private final GuiGraphics graphics;
         private final ItemStack stack;
         private final int x;
@@ -105,7 +105,7 @@ public class RenderMouseoverTooltipEvent extends Event {
         }
     }
 
-    public static class Miss extends RenderMouseoverTooltipEvent {
+    public static class Miss extends RenderTooltipEvent {
         public Miss(AbstractContainerScreen<?> screen) {
             super(screen);
         }

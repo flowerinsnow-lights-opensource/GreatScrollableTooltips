@@ -8,7 +8,6 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import online.flowerinsnow.greatscrollabletooltips.event.RenderTooltipEvent;
 import online.flowerinsnow.greatscrollabletooltips.event.HandledScreenKeyPressedEvent;
@@ -21,8 +20,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.List;
 
 @Mixin(HandledScreen.class)
 @Environment(EnvType.CLIENT)
@@ -77,7 +74,4 @@ public abstract class MixinHandledScreen extends Screen {
             RenderTooltipEvent.Miss.EVENT.invoker().missRenderTooltip(this.THIS, context, this.textRenderer, x, y);
         }
     }
-
-    @Shadow
-    protected abstract List<Text> getTooltipFromItem(ItemStack stack);
 }

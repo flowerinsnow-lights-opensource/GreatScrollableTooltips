@@ -8,7 +8,7 @@ import online.flowerinsnow.greatscrollabletooltips.event.HandledScreenKeyPressed
 import online.flowerinsnow.greatscrollabletooltips.object.ScrollSession;
 
 @OnlyIn(Dist.CLIENT)
-public class CursorKeyListener {
+public class ScreenKeyPressedListener {
     @SubscribeEvent
     public void onScreenKeyPressed(HandledScreenKeyPressedEvent event) {
         ScrollSession session = GreatScrollableTooltips.getInstance().getScrollSession();
