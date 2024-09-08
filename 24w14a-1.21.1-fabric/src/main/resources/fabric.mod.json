@@ -33,7 +33,7 @@
 		"fabric-api": ">=0.96.14"
 	},
 	"suggests": {
-		"modmenu": ">=8.0.0"
+		"modmenu": ">=10.0.0-alpha.3"
 	},
 	"breaks": {
 		"optifabric": "*"
