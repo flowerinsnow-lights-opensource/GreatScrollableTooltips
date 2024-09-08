@@ -28,6 +28,9 @@ jobs:
         run: |
           cd 1.20.2-24w13a-fabric/
           ./gradlew build
+        env:
+          GITHUB_USERNAME: ${{secrets.GH_PKG_USERNAME}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Release
         uses: softprops/action-gh-release@v2
