@@ -36,45 +36,45 @@ jobs:
           - 1.19.2-forge
           - 1.19.4-forge
           - 1.20.1-forge
-      include:
-        - dir: common
-          java-verion: 8
-        - dir: 1.16-1.16.1-fabric
-          java-verion: 8
-        - dir: 1.16.2-1.16.5-fabric
-          java-verion: 8
-        - dir: 1.17-1.17.1-fabric
-          java-verion: 16
-        - dir: 1.18-1.18.2-fabric
-          java-verion: 17
-        - dir: 1.19-1.19.1-fabric
-          java-verion: 17
-        - dir: 1.19.2-fabric
-          java-verion: 17
-        - dir: 1.19.3-1.19.4-fabric
-          java-verion: 17
-        - dir: 1.20-1.20.1-fabric
-          java-verion: 17
-        - dir: 1.20.2-24w13a-fabric
-          java-verion: 17
-        - dir: 24w14a-1.21.1-fabric
-          java-verion: 21
-        - dir: 24w33a-fabric
-          java-verion: 21
-        - dir: 1.8.9-1.10-forge
-          java-verion: 8
-        - dir: 1.10.2-1.11-forge
-          java-verion: 8
-        - dir: 1.11.2-1.12.2-forge
-          java-verion: 8
-        - dir: 1.18.2-forge
-          java-verion: 17
-        - dir: 1.19.2-forge
-          java-verion: 17
-        - dir: 1.19.4-forge
-          java-verion: 17
-        - dir: 1.20.1-forge
-          java-verion: 17
+        include:
+          - dir: common
+            java-verion: 8
+          - dir: 1.16-1.16.1-fabric
+            java-verion: 8
+          - dir: 1.16.2-1.16.5-fabric
+            java-verion: 8
+          - dir: 1.17-1.17.1-fabric
+            java-verion: 16
+          - dir: 1.18-1.18.2-fabric
+            java-verion: 17
+          - dir: 1.19-1.19.1-fabric
+            java-verion: 17
+          - dir: 1.19.2-fabric
+            java-verion: 17
+          - dir: 1.19.3-1.19.4-fabric
+            java-verion: 17
+          - dir: 1.20-1.20.1-fabric
+            java-verion: 17
+          - dir: 1.20.2-24w13a-fabric
+            java-verion: 17
+          - dir: 24w14a-1.21.1-fabric
+            java-verion: 21
+          - dir: 24w33a-fabric
+            java-verion: 21
+          - dir: 1.8.9-1.10-forge
+            java-verion: 8
+          - dir: 1.10.2-1.11-forge
+            java-verion: 8
+          - dir: 1.11.2-1.12.2-forge
+            java-verion: 8
+          - dir: 1.18.2-forge
+            java-verion: 17
+          - dir: 1.19.2-forge
+            java-verion: 17
+          - dir: 1.19.4-forge
+            java-verion: 17
+          - dir: 1.20.1-forge
+            java-verion: 17
 
     steps:
       - uses: actions/checkout@v4
