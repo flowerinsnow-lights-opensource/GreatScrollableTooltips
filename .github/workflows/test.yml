@@ -40,11 +40,11 @@ jobs:
           - dir: common
             java-verion: 8
           - dir: 1.16-1.16.1-fabric
-            java-verion: 8
+            java-verion: 17
           - dir: 1.16.2-1.16.5-fabric
-            java-verion: 8
+            java-verion: 17
           - dir: 1.17-1.17.1-fabric
-            java-verion: 16
+            java-verion: 17
           - dir: 1.18-1.18.2-fabric
             java-verion: 17
           - dir: 1.19-1.19.1-fabric
@@ -63,6 +63,7 @@ jobs:
             java-verion: 21
           - dir: 1.8.9-1.10-forge
             java-verion: 8
+            decompile: true
           - dir: 1.10.2-1.11-forge
             java-verion: 8
           - dir: 1.11.2-1.12.2-forge
@@ -92,7 +93,11 @@ jobs:
         run: |
           cd ${{ matrix.dir }}/
           chmod +x gradlew
+          if [ -n decompile ] then;
+              ./gradlew setupDecompWorkspace
+          fi
           ./gradlew build
         env:
           GITHUB_USERNAME: ${{ secrets.GH_PKG_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DECOMPILE: ${{ matrix.decompile }}
