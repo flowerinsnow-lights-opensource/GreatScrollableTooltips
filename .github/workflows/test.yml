@@ -93,7 +93,7 @@ jobs:
         run: |
           cd ${{ matrix.dir }}/
           chmod +x gradlew
-          if [ -n decompile ]; then
+          if [ -n "$DECOMPILE" ]; then
               ./gradlew setupDecompWorkspace
           fi
           ./gradlew build
