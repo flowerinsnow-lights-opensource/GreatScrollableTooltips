@@ -1,4 +1,4 @@
-name: "Tagged release with Gradle"
+name: "Release"
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - "v*"
 
 jobs:
-  tagged-release:
-    name: "Tagged Release"
+  release:
+    name: "Release"
     runs-on: "ubuntu-latest"
     permissions:
       contents: write
@@ -24,14 +24,14 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Distributions with Gradle Wrapper
+      - name: Build with Gradle Wrapper
         run: |
           cd 1.20.1-forge/
           chmod +x gradlew
           ./gradlew build
         env:
-          GITHUB_USERNAME: ${{secrets.GH_PKG_USERNAME}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_USERNAME: ${{ secrets.GH_PKG_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Release
         uses: softprops/action-gh-release@v2
