@@ -27,6 +27,7 @@ jobs:
       - name: Distributions with Gradle Wrapper
         run: |
           cd 1.20.1-forge/
+          chmod +x gradlew
           ./gradlew build
         env:
           GITHUB_USERNAME: ${{secrets.GH_PKG_USERNAME}}
