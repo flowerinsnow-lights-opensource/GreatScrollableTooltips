@@ -15,10 +15,12 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
 import online.flowerinsnow.greatscrollabletooltips.config.GreatScrollableTooltipsConfig;
 import online.flowerinsnow.greatscrollabletooltips.event.MouseScrolledInScreenEvent;
 import online.flowerinsnow.greatscrollabletooltips.event.RenderTooltipEvent;
+import online.flowerinsnow.greatscrollabletooltips.listener.AppleSkinListener;
 import online.flowerinsnow.greatscrollabletooltips.listener.ScreenKeyPressedListener;
 import online.flowerinsnow.greatscrollabletooltips.object.ScrollSession;
 import online.flowerinsnow.greatscrollabletooltips.provider.ModEnvironmentProvider;
@@ -132,6 +134,10 @@ public class GreatScrollableTooltips {
 
         eventBus.register(new ScreenKeyPressedListener());
         eventBus.addListener(this::initKeyBindings);
+
+        if (FMLLoader.getLoadingModList().getModFileById("appleskin") != null) {
+            eventBus.register(new AppleSkinListener());
+        }
     }
 
     public void initKeyBindings(RegisterKeyMappingsEvent event) {

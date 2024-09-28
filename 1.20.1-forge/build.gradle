@@ -142,9 +142,16 @@ repositories() {
         }
     }
 
-    maven {
+    maven() {
         name = "CurseMaven"
         url = "https://www.cursemaven.com"
+    }
+
+    /*
+     * AppleSkin
+     */
+    maven() {
+        url = 'https://maven.ryanliptak.com/'
     }
 }
 
@@ -177,10 +184,11 @@ dependencies() {
 
     // LegendaryTooltips 1.4.5
     // https://www.curseforge.com/minecraft/mc-mods/legendary-tooltips/files/4662781
-    implementation(fg.deobf("curse.maven:legendary-tooltips-532127:4662781"))
+    compileOnly(fg.deobf("curse.maven:legendary-tooltips-532127:4662781"))
     // Apotheosis v1.20.1-7.4.3
     // https://www.curseforge.com/minecraft/mc-mods/apotheosis/files/5753183
-    implementation(fg.deobf("curse.maven:apotheosis-313970:5753183"))
+    compileOnly(fg.deobf("curse.maven:apotheosis-313970:5753183"))
+    compileOnly(fg.deobf("squeek.appleskin:appleskin-forge:mc1.20.2-2.5.1:api"))
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
