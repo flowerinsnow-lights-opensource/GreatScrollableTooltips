@@ -1,4 +1,4 @@
-package online.flowerinsnow.greatscrollabletooltips.provider;
+package online.flowerinsnow.greatscrollabletooltips.common.provider;
 
 import java.io.InputStream;
 import java.nio.file.Path;
