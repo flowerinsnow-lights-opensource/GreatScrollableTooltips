@@ -1,19 +1,27 @@
 package online.flowerinsnow.greatscrollabletooltips;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.crash.CrashReport;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import online.flowerinsnow.greatscrollabletooltips.config.Config;
-import online.flowerinsnow.greatscrollabletooltips.listener.EventTrigger;
-import online.flowerinsnow.greatscrollabletooltips.listener.GreatScrollableTooltipsListener;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import online.flowerinsnow.greatscrollabletooltips.common.config.GreatScrollableTooltipsConfig;
+import online.flowerinsnow.greatscrollabletooltips.listener.EventTriggerListener;
+import online.flowerinsnow.greatscrollabletooltips.listener.KeyScrollListener;
+import online.flowerinsnow.greatscrollabletooltips.listener.MouseScrollListener;
+import online.flowerinsnow.greatscrollabletooltips.listener.ScrollingResetListener;
+import online.flowerinsnow.greatscrollabletooltips.manager.KeyBindingManager;
+import online.flowerinsnow.greatscrollabletooltips.common.object.ScrollSession;
+import online.flowerinsnow.greatscrollabletooltips.common.provider.ModEnvironmentProvider;
 
-import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Path;
 
 @Mod(
         modid = GreatScrollableTooltips.MODID,
@@ -26,56 +34,65 @@ import java.io.File;
 public class GreatScrollableTooltips {
     public static final String MODID = "great-scrollable-tooltips";
     public static final String NAME = "Great Scrollable Tooltips";
-    public static final String VERSION = "3.0.1";
+    public static final String VERSION = "3.1.0";
 
     private static GreatScrollableTooltips instance;
 
-    public static final Logger LOGGER = LogManager.getLogger(MODID);
+    private GreatScrollableTooltipsConfig config;
 
-    private Config config;
-
-    private int horizontal;
-    private int vertical;
+    private ScrollSession<ItemStack> scrollSession;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        instance = this;
-        config = new Config(new File(event.getModConfigurationDirectory(), MODID + ".conf"));
-        config.saveDefaultConfig();
-        config.load();
+        GreatScrollableTooltips.instance = this;
+        this.scrollSession = new ScrollSession<>();
+        this.initConfig(event.getModConfigurationDirectory().toPath());
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(new GreatScrollableTooltipsListener());
-        MinecraftForge.EVENT_BUS.register(new EventTrigger());
+        KeyBindingManager.registerAll();
+        this.initListeners();
+    }
+
+    private void initConfig(Path modConfigurationDirectory) {
+        this.config = new GreatScrollableTooltipsConfig(
+                new ModEnvironmentProvider() {
+                    @Override
+                    public InputStream getDefaultConfigAsStream() {
+                        return GreatScrollableTooltips.class.getResourceAsStream("/config.toml");
+                    }
+
+                    @Override
+                    public Path getConfigFile() {
+                        return modConfigurationDirectory.resolve(MODID + ".toml");
+                    }
+
+                    @Override
+                    public void crash(Throwable throwable, String msg) {
+                        Minecraft.getMinecraft().crashed(CrashReport.makeCrashReport(throwable, msg));
+                    }
+                }
+        );
+    }
+
+    private void initListeners() {
+        EventBus eventBus = MinecraftForge.EVENT_BUS;
+        eventBus.register(new EventTriggerListener());
+        eventBus.register(new MouseScrollListener(this));
+        eventBus.register(new KeyScrollListener(this));
+        eventBus.register(new ScrollingResetListener(this));
     }
 
     public static GreatScrollableTooltips getInstance() {
-        return instance;
+        return GreatScrollableTooltips.instance;
     }
 
-    public Config getConfig() {
-        return config;
+    public GreatScrollableTooltipsConfig getConfig() {
+        return this.config;
     }
 
-    public int getHorizontal() {
-        return horizontal;
-    }
-
-    @SuppressWarnings("UnusedReturnValue")
-    public GreatScrollableTooltips setHorizontal(int horizontal) {
-        this.horizontal = horizontal;
-        return this;
-    }
-
-    public int getVertical() {
-        return vertical;
-    }
-
-    @SuppressWarnings("UnusedReturnValue")
-    public GreatScrollableTooltips setVertical(int vertical) {
-        this.vertical = vertical;
-        return this;
+    public ScrollSession<ItemStack> getScrollSession() {
+        return this.scrollSession;
     }
 }

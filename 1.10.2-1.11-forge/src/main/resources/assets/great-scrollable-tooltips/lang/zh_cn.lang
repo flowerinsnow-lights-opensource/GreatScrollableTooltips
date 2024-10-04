@@ -1,6 +1,9 @@
 great-scrollable-tooltips.ui.title=Great Scrollable Tooltips
 great-scrollable-tooltips.ui.config.enable.true=启用：§atrue
 great-scrollable-tooltips.ui.config.enable.false=启用：§cfalse
+great-scrollable-tooltips.ui.config.auto-reset.true=自动回正: §atrue
+great-scrollable-tooltips.ui.config.auto-reset.false=自动回正: §cfalse
+great-scrollable-tooltips.ui.config.auto-reset.tooltip=当光标从物品上移开时回正滚动
 great-scrollable-tooltips.ui.config.sensitivity=灵敏度：
 great-scrollable-tooltips.ui.config.reload=重载配置
 great-scrollable-tooltips.ui.config.save-and-exit=保存并退出

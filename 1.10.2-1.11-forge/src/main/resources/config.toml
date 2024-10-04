@@ -1,2 +1,2 @@
-enable 'true'
-sensitivity '5'
+enable = true
+sensitivity = 5

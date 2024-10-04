@@ -3,15 +3,23 @@ package online.flowerinsnow.greatscrollabletooltips.listener;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import online.flowerinsnow.greatscrollabletooltips.GreatScrollableTooltips;
 import online.flowerinsnow.greatscrollabletooltips.event.ScreenMouseScrollEvent;
-import online.flowerinsnow.greatscrollabletooltips.object.ScrollSession;
+import online.flowerinsnow.greatscrollabletooltips.common.object.ScrollSession;
 
-public class ScreenMouseScrollListener {
+import java.util.Objects;
+
+/**
+ * 使用鼠标滚轮滚动物品
+ */
+@SideOnly(Side.CLIENT)
+public class MouseScrollListener {
     public final GreatScrollableTooltips main;
 
-    public ScreenMouseScrollListener(GreatScrollableTooltips main) {
-        this.main = main;
+    public MouseScrollListener(GreatScrollableTooltips main) {
+        this.main = Objects.requireNonNull(main);
     }
 
     @SubscribeEvent

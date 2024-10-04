@@ -19,7 +19,7 @@ apply('plugin': 'net.minecraftforge.gradle.forge')
 apply('plugin': 'com.github.johnrengelman.shadow')
 apply('plugin': 'org.spongepowered.mixin')
 
-version = '3.0.1'
+version = '3.1.0'
 group = 'online.flowerinsnow.greatscrollabletooltips' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'great-scrollable-tooltips'
 
@@ -37,6 +37,7 @@ minecraft() {
 }
 
 repositories() {
+    mavenLocal()
     mavenCentral()
     maven() {
         url = 'https://repo.spongepowered.org/repository/maven-public/'
@@ -56,6 +57,7 @@ configurations() {
 }
 
 dependencies() {
+    shade("com.electronwill.night-config:core:${version_night_config}")
     shade("com.electronwill.night-config:toml:${version_night_config}")
     shade("online.flowerinsnow.greatscrollabletooltips:common:${version_common_module}")
     shade("org.spongepowered:mixin:${version_mixin}") {
@@ -100,9 +102,19 @@ shadowJar() {
 
     configurations = [project.configurations.shade]
 
+    /*
+    dependencies() {
+//        include(dependency("com.electronwill.night-config:core:${version_night_config}"))
+        include(dependency("com.electronwill.night-config:toml:${version_night_config}"))
+        include(dependency("online.flowerinsnow.greatscrollabletooltips:common:${version_common_module}"))
+//        include(dependency("org.spongepowered:mixin:${version_mixin}"))
+    }
+     */
+
     [
             'com.electronwill.nightconfig.core',
-            'com.electronwill.nightconfig.toml'
+            'com.electronwill.nightconfig.toml',
+            'online.flowerinsnow.greatscrollabletooltips.common'
     ].forEach() {
         relocate(it, "online.flowerinsnow.greatscrollabletooltips.shaded.${it}")
     }
