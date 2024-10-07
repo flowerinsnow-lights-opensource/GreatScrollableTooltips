@@ -1,5 +1,7 @@
 package online.flowerinsnow.greatscrollabletooltips.mixin;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -39,6 +41,11 @@ public class MixinGuiUtils {
     )
     private static int modifyTooltipY(int value) {
         GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        if (instance.getScrollSession().getVertical() * instance.getConfig().sensitivity != 0) {
+            // TODO BEGIN DEBUG
+            Minecraft.getMinecraft().player.sendMessage(new TextComponentString(Integer.toString(instance.getScrollSession().getVertical() * instance.getConfig().sensitivity)));
+            // TODO END DEBUG
+        }
         return value + instance.getScrollSession().getVertical() * instance.getConfig().sensitivity;
     }
 }

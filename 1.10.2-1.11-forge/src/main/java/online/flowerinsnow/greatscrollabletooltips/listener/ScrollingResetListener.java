@@ -7,6 +7,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import online.flowerinsnow.greatscrollabletooltips.GreatScrollableTooltips;
 import online.flowerinsnow.greatscrollabletooltips.event.RenderTooltipEvent;
 import online.flowerinsnow.greatscrollabletooltips.common.object.ScrollSession;
+import online.flowerinsnow.greatscrollabletooltips.event.ScreenCloseEvent;
 
 import java.util.Objects;
 
@@ -24,6 +25,7 @@ public class ScrollingResetListener {
     @SubscribeEvent
     public void preRenderTooltip(RenderTooltipEvent.Pre event) {
         ScrollSession<ItemStack> session = this.main.getScrollSession();
+        session.setRendering(true);
         ItemStack itemStack = event.slot.getStack();
         if (itemStack != session.getLastItemStackRendered()) { // 如果正在渲染的物品和上一次渲染的物品不是同一个
             session.setLastItemStackRendered(itemStack);
@@ -44,7 +46,7 @@ public class ScrollingResetListener {
     }
 
     @SubscribeEvent
-    public void onScreenClose() {
+    public void onScreenClose(ScreenCloseEvent event) {
         ScrollSession<ItemStack> session = this.main.getScrollSession();
         session.setLastItemStackRendered(null);
         session.setRendering(false);
