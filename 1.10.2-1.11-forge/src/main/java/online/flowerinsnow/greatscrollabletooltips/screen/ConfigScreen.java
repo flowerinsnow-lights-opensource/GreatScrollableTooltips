@@ -7,6 +7,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.client.config.GuiSlider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import online.flowerinsnow.greatscrollabletooltips.GreatScrollableTooltips;
 import online.flowerinsnow.greatscrollabletooltips.common.config.GreatScrollableTooltipsConfig;
 
 import java.util.Objects;
@@ -16,6 +17,14 @@ public class ConfigScreen extends GuiScreen {
     private final GuiScreen parent;
     private final GreatScrollableTooltipsConfig config;
     private GuiSlider sensitivitySlider;
+
+    /*
+     * DO NOT DELETE THIS METHOD
+     * Forge will invoke constructor with 1 arg of <init>
+     */
+    public ConfigScreen(GuiScreen parent) {
+        this(parent, GreatScrollableTooltips.getInstance().getConfig());
+    }
 
     public ConfigScreen(GuiScreen parent, GreatScrollableTooltipsConfig config) {
         this.parent = Objects.requireNonNull(parent);
@@ -70,7 +79,7 @@ public class ConfigScreen extends GuiScreen {
         this.buttonList.add(
                 new GuiButton(
                         400053428,
-                        this.width / 2 - 100, this.height / 2 + 45,
+                        this.width / 2 - 100, this.height / 2 + 55,
                         200, 20,
                         I18n.format("great-scrollable-tooltips.ui.config.discard-and-exit")
                 )

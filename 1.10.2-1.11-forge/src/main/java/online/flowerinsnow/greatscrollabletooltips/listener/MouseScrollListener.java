@@ -24,7 +24,7 @@ public class MouseScrollListener {
 
     @SubscribeEvent
     public void onScreenMouseScroll(ScreenMouseScrollEvent event) {
-        if (!this.main.getConfig().enable) { // 只有
+        if (!this.main.getConfig().enable) { // 只有启用时
             return;
         }
 
@@ -35,9 +35,9 @@ public class MouseScrollListener {
         }
 
         if (!GuiScreen.isShiftKeyDown()) {
-            session.addHorizontal(event.amount);
-        } else {
             session.addVertical(event.amount);
+        } else {
+            session.addHorizontal(event.amount);
         }
     }
 }

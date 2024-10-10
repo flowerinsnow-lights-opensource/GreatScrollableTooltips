@@ -23,7 +23,7 @@ public class KeyScrollListener {
     }
 
     @SubscribeEvent
-    public void onScreenKeyPress(ScreenKeyPressedEvent event) {
+    public void onScreenKeyPress(ScreenKeyPressedEvent.Pre event) {
         ScrollSession<ItemStack> session = main.getScrollSession();
 
         if (session.isRendering()) {

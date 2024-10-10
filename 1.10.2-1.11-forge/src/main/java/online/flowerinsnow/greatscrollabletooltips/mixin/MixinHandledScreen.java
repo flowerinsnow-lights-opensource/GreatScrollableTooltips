@@ -1,14 +1,17 @@
 package online.flowerinsnow.greatscrollabletooltips.mixin;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.MinecraftForge;
 import online.flowerinsnow.greatscrollabletooltips.event.RenderTooltipEvent;
 import online.flowerinsnow.greatscrollabletooltips.event.ScreenKeyPressedEvent;
 import online.flowerinsnow.greatscrollabletooltips.event.ScreenMouseScrollEvent;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -31,13 +34,13 @@ public class MixinHandledScreen extends GuiScreen {
     @Inject(
             method = "drawScreen",
             at = @At(
-                    value = "INVOKE_ASSIGN",
-                    target = "Lnet/minecraft/client/renderer/GlStateManager;popMatrix()V",
-                    ordinal = 0
-            ),
-            locals = LocalCapture.CAPTURE_FAILSOFT
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/InventoryPlayer;getItemStack()Lnet/minecraft/item/ItemStack;",
+                    ordinal = 1
+            )
     )
-    public void preRenderTooltip(int mouseX, int mouseY, float partialTicks, CallbackInfo ci, InventoryPlayer inventoryplayer) {
+    public void preRenderTooltip(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
+        InventoryPlayer inventoryplayer = this.mc.player.inventory;
         if (inventoryplayer.getItemStack().isEmpty() && this.theSlot != null && this.theSlot.getHasStack()) {
             MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.Pre(this.THIS, this.theSlot));
         } else {

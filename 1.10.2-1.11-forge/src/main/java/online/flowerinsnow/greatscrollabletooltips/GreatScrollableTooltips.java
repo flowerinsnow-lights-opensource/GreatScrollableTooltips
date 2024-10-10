@@ -74,6 +74,8 @@ public class GreatScrollableTooltips {
                     }
                 }
         );
+        this.config.saveDefaultConfig();
+        this.config.load();
     }
 
     private void initListeners() {
