@@ -9,6 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import online.flowerinsnow.greatscrollabletooltips.config.GreatScrollableTooltipsConfig;
+import online.flowerinsnow.greatscrollabletooltips.mixin.AccessorAbstractSliderButton;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -119,7 +120,9 @@ public class ConfigScreen extends Screen {
                         button -> {
                             ConfigScreen instance = ConfigScreen.this;
                             GreatScrollableTooltipsConfig config = instance.config;
-                            config.sensitivity = BigDecimal.valueOf(instance.sensitivitySlider.value)
+                            // config.sensitivity = BigDecimal.valueOf(instance.sensitivitySlider.value)
+                            AccessorAbstractSliderButton accessor = (AccessorAbstractSliderButton) (instance.sensitivitySlider);
+                            config.sensitivity = BigDecimal.valueOf(accessor.getValue())
                                     .multiply(new BigDecimal(99))
                                     .add(BigDecimal.ONE)
                                     .setScale(0, RoundingMode.DOWN)

@@ -3,20 +3,18 @@ package online.flowerinsnow.greatscrollabletooltips.event;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
 import java.util.Objects;
 
 @OnlyIn(Dist.CLIENT)
-@Cancelable
-public class HandledScreenKeyPressedEvent extends Event {
+public class PreScreenKeyPressedEvent extends Event {
     private final AbstractContainerScreen<?> screen;
     private final int keyCode;
     private final int scanCode;
     private final int modifiers;
 
-    public HandledScreenKeyPressedEvent(AbstractContainerScreen<?> screen, int keyCode, int scanCode, int modifiers) {
+    public PreScreenKeyPressedEvent(AbstractContainerScreen<?> screen, int keyCode, int scanCode, int modifiers) {
         this.screen = screen;
         this.keyCode = keyCode;
         this.scanCode = scanCode;
@@ -28,23 +26,23 @@ public class HandledScreenKeyPressedEvent extends Event {
     }
 
     public int getKeyCode() {
-        return keyCode;
+        return this.keyCode;
     }
 
     public int getScanCode() {
-        return scanCode;
+        return this.scanCode;
     }
 
     public int getModifiers() {
-        return modifiers;
+        return this.modifiers;
     }
 
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        HandledScreenKeyPressedEvent that = (HandledScreenKeyPressedEvent) object;
-        return keyCode == that.keyCode && scanCode == that.scanCode && modifiers == that.modifiers && Objects.equals(this.screen, that.screen);
+        PreScreenKeyPressedEvent that = (PreScreenKeyPressedEvent) object;
+        return this.keyCode == that.keyCode && this.scanCode == that.scanCode && this.modifiers == that.modifiers && Objects.equals(this.screen, that.screen);
     }
 
     @Override
@@ -59,7 +57,7 @@ public class HandledScreenKeyPressedEvent extends Event {
 
     @Override
     public String toString() {
-        return "HandledScreenKeyPressedEvent{" +
+        return "PreScreenKeyPressedEvent{" +
                 "screen=" + this.screen +
                 ", keyCode=" + this.keyCode +
                 ", scanCode=" + this.scanCode +

@@ -12,6 +12,36 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Mixin(SocketTooltipRenderer.class)
 @OnlyIn(Dist.CLIENT)
 public class MixinSocketTooltipRenderer {
+    /*
+    @ModifyVariable(
+            method = "renderImage",
+            at = @At(
+                    value = "HEAD",
+                    ordinal = 0
+            ),
+            index = 2,
+            argsOnly = true
+    )
+    public int modifyXX(int x) {
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        return x + instance.getScrollSession().getHorizontal() * instance.getConfig().sensitivity;
+    }
+    @ModifyVariable(
+            method = "renderImage",
+            at = @At(
+                    value = "HEAD",
+                    ordinal = 0
+            ),
+            index = 2,
+            argsOnly = true
+    )
+
+    public int modifyYY(int y) {
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        return y + instance.getScrollSession().getHorizontal() * instance.getConfig().sensitivity;
+    }
+     */
+
     @ModifyArg(
             method = "renderImage",
             at = @At(

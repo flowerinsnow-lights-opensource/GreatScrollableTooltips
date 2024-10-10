@@ -5,12 +5,11 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import online.flowerinsnow.greatscrollabletooltips.event.HandledScreenKeyPressedEvent;
-import online.flowerinsnow.greatscrollabletooltips.event.MouseScrolledInScreenEvent;
+import online.flowerinsnow.greatscrollabletooltips.event.PreScreenKeyPressedEvent;
+import online.flowerinsnow.greatscrollabletooltips.event.PreScreenMouseScrollEvent;
 import online.flowerinsnow.greatscrollabletooltips.event.RenderTooltipEvent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,38 +38,29 @@ public class MixinHandledScreen extends Screen {
         super(null);
     }
 
+    @Inject(
+            method = "renderTooltip",
+            at = @At("HEAD")
+    )
+    public void renderTooltip(GuiGraphics graphics, int x, int y, CallbackInfo ci) {
+        if (this.menu.getCarried().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
+            MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.Pre(this.THIS, graphics, x, y, this.menu, this.hoveredSlot));
+        } else {
+            MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.Miss(this.THIS));
+        }
+    }
 
     @Inject(
             method = "keyPressed",
-            at = @At("HEAD"),
-            cancellable = true
+            at = @At("HEAD")
     )
     public void keyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
-        HandledScreenKeyPressedEvent event = new HandledScreenKeyPressedEvent(this.THIS, keyCode, scanCode, modifiers);
-        if (MinecraftForge.EVENT_BUS.post(event)) {
-            cir.setReturnValue(false);
-        }
+        MinecraftForge.EVENT_BUS.post(new PreScreenKeyPressedEvent(this.THIS, keyCode, scanCode, modifiers));
     }
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-        MouseScrolledInScreenEvent event = new MouseScrolledInScreenEvent(this.THIS, mouseX, mouseY, amount);
-        if (MinecraftForge.EVENT_BUS.post(event)) {
-            return false;
-        }
+        MinecraftForge.EVENT_BUS.post(new PreScreenMouseScrollEvent(this.THIS, mouseX, mouseY, amount));
         return super.mouseScrolled(mouseX, mouseY, amount);
-    }
-
-    @Inject(
-            method = "renderTooltip",
-            at = @At("RETURN")
-    )
-    public void postDrawMouseoverTooltip(GuiGraphics graphics, int x, int y, CallbackInfo ci) {
-        if (this.menu.getCarried().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
-            ItemStack itemStack = this.hoveredSlot.getItem();
-            MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.Post(this.THIS, graphics, itemStack, x, y));
-        } else {
-            MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.Miss(this.THIS));
-        }
     }
 }

@@ -27,20 +27,6 @@ public class MixinScreen {
     }
 
     @ModifyArg(
-            method = "renderTooltipInternal",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipComponent;renderText(Lnet/minecraft/client/gui/Font;IILorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;)V",
-                    ordinal = 0
-            ),
-            index = 1
-    )
-    private int modifyTextX(int x) {
-        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
-        return x + (instance.getScrollSession().getHorizontal() * instance.getConfig().sensitivity);
-    }
-
-    @ModifyArg(
             method = "lambda$renderTooltipInternal$5",
             at = @At(
                     value = "INVOKE",
@@ -53,6 +39,20 @@ public class MixinScreen {
     private int modifyBackgroundY(int y) {
         GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
         return y + (instance.getScrollSession().getVertical() * instance.getConfig().sensitivity);
+    }
+
+    @ModifyArg(
+            method = "renderTooltipInternal",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipComponent;renderText(Lnet/minecraft/client/gui/Font;IILorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;)V",
+                    ordinal = 0
+            ),
+            index = 1
+    )
+    private int modifyTextX(int x) {
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        return x + (instance.getScrollSession().getHorizontal() * instance.getConfig().sensitivity);
     }
 
     @ModifyArg(

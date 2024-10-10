@@ -13,6 +13,38 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Mixin(ItemModelComponent.class)
 @OnlyIn(Dist.CLIENT)
 public class MixinItemModelComponent {
+    /*
+    @ModifyVariable(
+            method = "renderImage",
+            at = @At(
+                    value = "LOAD",
+                    opcode = Opcodes.ILOAD,
+                    ordinal = 0
+            ),
+            index = 2,
+            argsOnly = true
+    )
+    public int modifyX(int x) {
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        return instance.getScrollSession().getHorizontal() * instance.getConfig().sensitivity;
+    }
+
+    @ModifyVariable(
+            method = "renderImage",
+            at = @At(
+                    value = "LOAD",
+                    opcode = Opcodes.ILOAD,
+                    ordinal = 0
+            ),
+            index = 3,
+            argsOnly = true
+    )
+    public int modifyY(int x) {
+        GreatScrollableTooltips instance = GreatScrollableTooltips.getInstance();
+        return instance.getScrollSession().getVertical() * instance.getConfig().sensitivity;
+    }
+     */
+
     @ModifyArg(
             method = "renderImage",
             at = @At(

@@ -2,7 +2,8 @@ package online.flowerinsnow.greatscrollabletooltips.event;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.Event;
@@ -43,34 +44,40 @@ public class RenderTooltipEvent extends Event {
                 '}';
     }
 
-    public static class Post extends RenderTooltipEvent {
+    public static class Pre extends RenderTooltipEvent {
         private final GuiGraphics graphics;
-        private final ItemStack stack;
         private final int x;
         private final int y;
+        private final AbstractContainerMenu menu;
+        private final Slot slot;
 
-        public Post(AbstractContainerScreen<?> screen, GuiGraphics graphics, ItemStack stack, int x, int y) {
+        public Pre(AbstractContainerScreen<?> screen, GuiGraphics graphics, int x, int y, AbstractContainerMenu menu, Slot slot) {
             super(screen);
             this.graphics = graphics;
-            this.stack = stack;
             this.x = x;
             this.y = y;
+            this.menu = menu;
+            this.slot = slot;
         }
 
         public GuiGraphics getGraphics() {
             return this.graphics;
         }
 
-        public ItemStack getStack() {
-            return stack;
-        }
-
         public int getX() {
-            return x;
+            return this.x;
         }
 
         public int getY() {
-            return y;
+            return this.y;
+        }
+
+        public AbstractContainerMenu getMenu() {
+            return menu;
+        }
+
+        public Slot getSlot() {
+            return this.slot;
         }
 
         @Override
@@ -78,8 +85,8 @@ public class RenderTooltipEvent extends Event {
             if (this == object) return true;
             if (object == null || getClass() != object.getClass()) return false;
             if (!super.equals(object)) return false;
-            Post that = (Post) object;
-            return this.x == that.x && this.y == that.y && Objects.equals(this.graphics, that.graphics) && Objects.equals(this.stack, that.stack);
+            Pre that = (Pre) object;
+            return this.x == that.x && this.y == that.y && Objects.equals(this.graphics, that.graphics) && Objects.equals(this.menu, that.menu) && Objects.equals(this.slot, that.slot);
         }
 
         @Override
@@ -87,9 +94,10 @@ public class RenderTooltipEvent extends Event {
             int result = 17;
             result = 31 * result + super.hashCode();
             result = 31 * result + (this.graphics != null ? this.graphics.hashCode() : 0);
-            result = 31 * result + (this.stack != null ? this.stack.hashCode() : 0);
             result = 31 * result + this.x;
             result = 31 * result + this.y;
+            result = 31 * result + (this.menu != null ? this.menu.hashCode() : 0);
+            result = 31 * result + (this.slot != null ? this.slot.hashCode() : 0);
             return result;
         }
 
@@ -97,10 +105,11 @@ public class RenderTooltipEvent extends Event {
         public String toString() {
             return "Post{" +
                     "super=" + super.toString() +
-                    ", graphics=" + graphics +
-                    ", stack=" + stack +
-                    ", x=" + x +
-                    ", y=" + y +
+                    ", graphics=" + this.graphics +
+                    ", x=" + this.x +
+                    ", y=" + this.y +
+                    ", menu=" + this.menu +
+                    ", slot=" + this.slot +
                     '}';
         }
     }
